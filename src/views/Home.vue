@@ -1,0 +1,82 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { localCms } from '../localCms';
+import Navbar from '../components/Navbar/Navbar.vue';
+import HeroSection from '../components/HeroSection/HeroSection.vue';
+import UspSection from '../components/UspSection/UspSection.vue';
+import CaseStudySection from '../components/CaseStudySection/CaseStudySection.vue';
+import CareerSection from '../components/CareerSection/CareerSection.vue';
+
+// Site configuration state with static fallbacks
+const siteData = ref({
+  navbar_logo: 'PORTFOLIO',
+  hero_title: 'I HAVE GRAPHIC DESIGN OR WEB DEVELOP EXPERIENCE',
+  hero_description: 'i have many years experience with social media design, print templates design, UI/UX prototyping, and building responsive, high-performance web applications using modern technologies.',
+  portrait_url: '/avatar.png',
+  case_studies: []
+});
+
+const socialLinks = ref([]);
+const clientLogos = ref([]);
+const isLoading = ref(true);
+
+onMounted(() => {
+  try {
+    isLoading.value = true;
+    const data = localCms.loadData();
+    siteData.value = data.siteData;
+    socialLinks.value = data.socialLinks;
+    clientLogos.value = data.clientLogos;
+    
+    // Update Meta Title & Description dynamically
+    if (siteData.value.meta_title) {
+      document.title = siteData.value.meta_title;
+    }
+    if (siteData.value.meta_description) {
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', siteData.value.meta_description);
+    }
+  } catch (error) {
+    console.error('Error loading portfolio data from Local Storage:', error);
+  } finally {
+    isLoading.value = false;
+  }
+});
+</script>
+
+<template>
+  <div class="app-layout">
+    <Navbar :logo="siteData.navbar_logo" />
+    <main>
+      <HeroSection 
+        :prefix="siteData.hero_prefix"
+        :title="siteData.hero_title"
+        :description="siteData.hero_description"
+        :portraitUrl="siteData.portrait_url"
+        :socialLinks="socialLinks"
+        :clientLogos="clientLogos"
+      />
+      <UspSection 
+        :title="siteData.usp_title"
+        :description="siteData.usp_description"
+        :stats="siteData.usp_stats"
+        :services="siteData.usp_services"
+      />
+      <CaseStudySection :cards="siteData.case_studies" />
+      <CareerSection />
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+</style>
