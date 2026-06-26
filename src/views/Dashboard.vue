@@ -81,6 +81,28 @@
           </svg>
           <span class="nav-label">Case Studies</span>
         </button>
+        <button 
+          class="nav-item" 
+          :class="{ 'active': activeSection === 'career' }"
+          @click="setActiveSection('career')"
+          id="nav-item-career"
+        >
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM12 2C6.48 2 2 6.48 2 12h2c0-4.41 3.59-8 8-8s8 3.59 8 8h2c0-5.52-4.48-10-10-10z" fill="currentColor"/>
+          </svg>
+          <span class="nav-label">Professional Journey</span>
+        </button>
+        <button 
+          class="nav-item" 
+          :class="{ 'active': activeSection === 'testimonial' }"
+          @click="setActiveSection('testimonial')"
+          id="nav-item-testimonial"
+        >
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" fill="currentColor"/>
+          </svg>
+          <span class="nav-label">Testimonials</span>
+        </button>
       </nav>
       
       <!-- Sidebar Footer -->
@@ -422,6 +444,173 @@
               </div>
             </form>
           </div>
+
+          <!-- Section: Professional Journey (Dashboard Form) -->
+          <div v-if="activeSection === 'career'" class="workspace-card animated-fade-in" id="career-section-card">
+            <div class="card-header">
+              <h3 class="card-title">Manage Professional Journey</h3>
+              <p class="card-subtitle">Configure timeline items, dates, and roles dynamically.</p>
+            </div>
+            
+            <form @submit.prevent="handleSave" class="dashboard-form">
+              <!-- General Settings -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">01</span>
+                  <h4 class="section-title">General Section Header Info</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="career-prefix" class="form-label">Section Prefix</label>
+                    <input type="text" id="career-prefix" v-model="siteData.career_prefix" class="form-input" required />
+                  </div>
+                  
+                  <div class="form-group col-span-2">
+                    <label for="career-title" class="form-label">Section Title</label>
+                    <input type="text" id="career-title" v-model="siteData.career_title" class="form-input" required />
+                    <span class="hint-text">Highlighted terms: "Journey" or "journey" will automatically be highlighted in yellow.</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="career-subtitle" class="form-label">Section Subtitle</label>
+                    <input type="text" id="career-subtitle" v-model="siteData.career_subtitle" class="form-input" required />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Career Timeline Items -->
+              <div class="form-section">
+                <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="section-badge">02</span>
+                    <h4 class="section-title">Timeline Cards</h4>
+                  </div>
+                  <button type="button" @click="addCareerItem" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: #1a1a24; border: none; cursor: pointer;" id="btn-add-career-item">
+                    + Add New Card
+                  </button>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 16px;">
+                  <div v-for="(item, index) in siteData.career_items" :key="index" class="form-row-fluent" style="flex-direction: column; align-items: stretch; padding: 20px; gap: 16px; background-color: rgba(20, 21, 28, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div style="font-weight: 700; color: var(--accent); font-size: 0.9rem;">Card #{{ index + 1 }}</div>
+                      <button type="button" @click="deleteCareerItem(index)" class="btn-pill-fluent" style="font-size: 0.75rem; padding: 4px 10px; background-color: #ef5350; color: white; border: none; cursor: pointer;" :id="'btn-delete-career-' + index">
+                        Delete Card
+                      </button>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px;">
+                      <div class="row-cell">
+                        <label class="form-label" style="font-size: 0.72rem;">Date/Year Range</label>
+                        <input type="text" v-model="item.date" class="form-input" required />
+                      </div>
+                      <div class="row-cell">
+                        <label class="form-label" style="font-size: 0.72rem;">Role & Location</label>
+                        <input type="text" v-model="item.role" class="form-input" required />
+                      </div>
+                    </div>
+                    
+                    <div class="row-cell">
+                      <label class="form-label" style="font-size: 0.72rem;">Description</label>
+                      <textarea v-model="item.desc" class="form-input text-area" rows="3" required></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Save Button -->
+              <div class="form-actions-bar">
+                <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-career">
+                  <svg viewBox="0 0 24 24" width="16" height="16" class="btn-icon">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" fill="currentColor"/>
+                  </svg>
+                  <span>Save Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Section: Testimonials (Dashboard Form) -->
+          <div v-if="activeSection === 'testimonial'" class="workspace-card animated-fade-in" id="testimonial-section-card">
+            <div class="card-header">
+              <h3 class="card-title">Manage Testimonials</h3>
+              <p class="card-subtitle">Configure client quotes, roles, and names dynamically.</p>
+            </div>
+            
+            <form @submit.prevent="handleSave" class="dashboard-form">
+              <!-- General Settings -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">01</span>
+                  <h4 class="section-title">General Section Header Info</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="testimonial-prefix" class="form-label">Section Prefix</label>
+                    <input type="text" id="testimonial-prefix" v-model="siteData.testimonial_prefix" class="form-input" required />
+                  </div>
+                  
+                  <div class="form-group col-span-2">
+                    <label for="testimonial-title" class="form-label">Section Title</label>
+                    <input type="text" id="testimonial-title" v-model="siteData.testimonial_title" class="form-input" required />
+                    <span class="hint-text">Highlighted terms: "Say" or "say" will automatically be highlighted in yellow.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Items -->
+              <div class="form-section">
+                <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="section-badge">02</span>
+                    <h4 class="section-title">Review Cards</h4>
+                  </div>
+                  <button type="button" @click="addTestimonialItem" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: #1a1a24; border: none; cursor: pointer;" id="btn-add-testimonial-item">
+                    + Add New Review
+                  </button>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 16px;">
+                  <div v-for="(item, index) in siteData.testimonial_items" :key="index" class="form-row-fluent" style="flex-direction: column; align-items: stretch; padding: 20px; gap: 16px; background-color: rgba(20, 21, 28, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div style="font-weight: 700; color: var(--accent); font-size: 0.9rem;">Review #{{ index + 1 }}</div>
+                      <button type="button" @click="deleteTestimonialItem(index)" class="btn-pill-fluent" style="font-size: 0.75rem; padding: 4px 10px; background-color: #ef5350; color: white; border: none; cursor: pointer;" :id="'btn-delete-testimonial-' + index">
+                        Delete Review
+                      </button>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                      <div class="row-cell">
+                        <label class="form-label" style="font-size: 0.72rem;">Client Name</label>
+                        <input type="text" v-model="item.name" class="form-input" required />
+                      </div>
+                      <div class="row-cell">
+                        <label class="form-label" style="font-size: 0.72rem;">Role / Company</label>
+                        <input type="text" v-model="item.role" class="form-input" required />
+                      </div>
+                    </div>
+                    
+                    <div class="row-cell">
+                      <label class="form-label" style="font-size: 0.72rem;">Review Quote Text</label>
+                      <textarea v-model="item.text" class="form-input text-area" rows="3" required></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Save Button -->
+              <div class="form-actions-bar">
+                <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-testimonial">
+                  <svg viewBox="0 0 24 24" width="16" height="16" class="btn-icon">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" fill="currentColor"/>
+                  </svg>
+                  <span>Save Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </main>
     </div>
@@ -445,8 +634,49 @@ const siteData = ref({
   meta_description: '',
   usp_stats: [],
   usp_services: [],
-  case_studies: []
+  case_studies: [],
+  career_prefix: '',
+  career_title: '',
+  career_subtitle: '',
+  career_items: [],
+  testimonial_prefix: '',
+  testimonial_title: '',
+  testimonial_items: []
 });
+
+const addCareerItem = () => {
+  if (!siteData.value.career_items) {
+    siteData.value.career_items = [];
+  }
+  siteData.value.career_items.push({
+    date: '2026 - Present',
+    role: 'New Role & Position | Company | Location',
+    desc: 'Describe responsibilities, highlights, and budgets managed.'
+  });
+};
+
+const deleteCareerItem = (index) => {
+  if (siteData.value.career_items) {
+    siteData.value.career_items.splice(index, 1);
+  }
+};
+
+const addTestimonialItem = () => {
+  if (!siteData.value.testimonial_items) {
+    siteData.value.testimonial_items = [];
+  }
+  siteData.value.testimonial_items.push({
+    name: 'New Client Name',
+    role: 'Product Manager / CEO',
+    text: '"Describe their feedback on your delivery, quality, and leadership."'
+  });
+};
+
+const deleteTestimonialItem = (index) => {
+  if (siteData.value.testimonial_items) {
+    siteData.value.testimonial_items.splice(index, 1);
+  }
+};
 
 const socialLinks = ref([]);
 const clientLogos = ref([]);

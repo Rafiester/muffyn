@@ -1,7 +1,16 @@
 <template>
-  <section class="hero-section" id="home">
+  <section ref="heroRef" class="hero-section" id="home">
+    <!-- WebGL Background Canvas -->
+    <canvas ref="canvasRef" class="bg-canvas"></canvas>
+
+    <!-- Custom Follower Cursor -->
+    <div 
+      class="custom-cursor" 
+      :class="{ 'visible': isCursorVisible }" 
+      :style="{ transform: `translate3d(${cursorX}px, ${cursorY}px, 0)` }"
+    ></div>
+
     <div class="container hero-container">
-      
       <!-- Left Column: Content -->
       <div class="hero-content">
         <!-- Prefix Wording -->
@@ -10,8 +19,16 @@
           <span class="prefix-text">{{ prefix }}</span>
         </div>
         
-        <!-- Render formatted title with highlight spans using v-html -->
-        <h1 class="hero-title" v-html="formattedTitle"></h1>
+        <!-- Render typing title effect -->
+        <TextType
+          as="h1"
+          class="hero-title"
+          :text="title"
+          :loop="false"
+          :show-cursor="true"
+          cursor-character="|"
+          :typing-speed="125"
+        />
         
         <p class="hero-description">
           {{ description }}
@@ -19,6 +36,7 @@
         
         <div class="hero-actions">
           <a href="#contact" class="btn-pill">Hire Me</a>
+          <a href="#" class="btn-pill">Download CV</a>
           
           <div class="social-links">
             <a 
@@ -52,8 +70,8 @@
         </div>
       </div>
     </div>
-    
-    <!-- Bottom Overlapping Banner (Client Logos) -->
+
+    <!-- Bottom Overlapping Banner (Client Logos) - Placed outside container and centered -->
     <div class="client-banner">
       <span 
         v-for="(client, index) in clientLogos" 
@@ -105,7 +123,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
+import * as THREE from 'three';
+import TextType from './TextType.vue';
 
 const props = defineProps({
   prefix: {
@@ -114,11 +134,11 @@ const props = defineProps({
   },
   title: {
     type: String,
-    default: ''
+    default: 'PROJECT MANAGER & \n SYSTEM ANALYST'
   },
   description: {
     type: String,
-    default: ''
+    default: 'Crafting precise digital products with Vue.js, Nuxt, and the modern web stack.'
   },
   portraitUrl: {
     type: String,
@@ -152,6 +172,217 @@ const formattedTitle = computed(() => {
     text = text.replace(regex, `<span class="highlight">${phrase}</span>`);
   });
   return text;
+});
+
+const heroRef = ref(null);
+const canvasRef = ref(null);
+const cursorX = ref(0);
+const cursorY = ref(0);
+const isCursorVisible = ref(false);
+
+// Smooth mouse tracking uniforms
+const targetMouse = { x: 0.5, y: 0.5 };
+const currentMouse = { x: 0.5, y: 0.5 };
+
+let renderer, scene, camera, material, mesh, animationFrameId;
+
+// Vertex Shader
+const vertexShader = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position, 1.0);
+  }
+`;
+
+// Fragment Shader
+const fragmentShader = `
+  uniform float u_time;
+  uniform vec2 u_mouse;
+  uniform vec2 u_resolution;
+  varying vec2 vUv;
+
+  // Simplex 2D noise
+  vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+
+  float snoise(vec2 v){
+    const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+             -0.577350269189626, 0.024390243902439);
+    vec2 i  = floor(v + dot(v, C.yy) );
+    vec2 x0 = v -   i + dot(i, C.xx);
+    vec2 i1;
+    i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+    i = mod(i, 289.0);
+    vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+    + i.x + vec3(0.0, i1.x, 1.0 ));
+    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy),
+      dot(x12.zw,x12.zw)), 0.0);
+    m = m*m ;
+    m = m*m ;
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+    vec3 h = abs(x) - 0.5;
+    vec3 a0 = x - floor(x + 0.5);
+    vec3 g = a0 * vec3(x0.x,x12.xz) + h * vec3(x0.y,x12.yw);
+    vec3  t = 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+    vec3 rgb = g * t;
+    return 130.0 * dot(m, rgb);
+  }
+
+  float fbm(vec2 p) {
+    float v = 0.0;
+    float a = 0.5;
+    vec2 shift = vec2(100.0);
+    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+    for (int i = 0; i < 4; ++i) {
+        v += a * snoise(p);
+        p = rot * p * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
+  }
+
+  void main() {
+    vec2 aspectCorrectedUv = vUv;
+    aspectCorrectedUv.x *= u_resolution.x / u_resolution.y;
+    vec2 aspectCorrectedMouse = u_mouse;
+    aspectCorrectedMouse.x *= u_resolution.x / u_resolution.y;
+    
+    float dist = distance(aspectCorrectedUv, aspectCorrectedMouse);
+    float radius = 0.7;
+    float softEdge = 0.65;
+    float spotlight = smoothstep(radius, radius - softEdge, dist);
+
+    vec3 colorBg = vec3(0.1412, 0.1451, 0.1804); // #24252E
+    vec3 colorPrimary = vec3(1.0, 0.7176, 0.0118); // #FFB703
+    vec3 colorSecondary = vec3(0.2627, 0.3804, 0.9333); // #4361EE
+
+    vec2 q = vec2(0.0);
+    q.x = fbm(vUv * 2.5 + u_time * 0.06);
+    q.y = fbm(vUv * 2.5 + vec2(1.0) + u_time * 0.09);
+
+    vec2 r = vec2(0.0);
+    r.x = fbm(vUv * 2.5 + 4.0 * q + vec2(1.7, 9.2) + u_time * 0.03);
+    r.y = fbm(vUv * 2.5 + 4.0 * q + vec2(8.3, 2.8) + u_time * 0.05);
+
+    float n = fbm(vUv * 1.5 + 3.0 * r);
+
+    // Dynamic blend of primary and secondary colors
+    vec3 auroraColor = mix(colorPrimary, colorSecondary, clamp(n * 1.6, 0.0, 1.0));
+    
+    // Add subtle brightness variations
+    auroraColor += vec3(0.05) * sin(n * 8.0 + u_time);
+
+    float intensity = clamp(n * 0.85 + 0.15, 0.0, 1.0);
+    vec3 finalColor = mix(colorBg, auroraColor, intensity * spotlight);
+
+    gl_FragColor = vec4(finalColor, 1.0);
+  }
+`;
+
+const handleMouseMove = (e) => {
+  cursorX.value = e.clientX;
+  cursorY.value = e.clientY;
+  isCursorVisible.value = true;
+  
+  // Normalize mouse coordinates for WebGL: x, y in range [0, 1]
+  targetMouse.x = e.clientX / window.innerWidth;
+  targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
+};
+
+const handleMouseLeave = () => {
+  isCursorVisible.value = false;
+};
+
+const handleResize = () => {
+  if (!renderer || !material) return;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  renderer.setSize(width, height);
+  material.uniforms.u_resolution.value.set(width, height);
+};
+
+onMounted(() => {
+  const heroEl = heroRef.value;
+  if (heroEl) {
+    heroEl.addEventListener('mousemove', handleMouseMove);
+    heroEl.addEventListener('mouseleave', handleMouseLeave);
+  }
+
+  window.addEventListener('resize', handleResize);
+
+  // Setup WebGL
+  const container = canvasRef.value;
+  if (!container) return;
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  scene = new THREE.Scene();
+  camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  
+  renderer = new THREE.WebGLRenderer({
+    canvas: container,
+    antialias: true,
+    alpha: false
+  });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const geometry = new THREE.PlaneGeometry(2, 2);
+  material = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms: {
+      u_time: { value: 0 },
+      u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
+      u_resolution: { value: new THREE.Vector2(width, height) }
+    }
+  });
+
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  const clock = new THREE.Clock();
+
+  const animate = () => {
+    animationFrameId = requestAnimationFrame(animate);
+
+    // Lerp u_mouse uniform for smooth movement
+    currentMouse.x += (targetMouse.x - currentMouse.x) * 0.08;
+    currentMouse.y += (targetMouse.y - currentMouse.y) * 0.08;
+    material.uniforms.u_mouse.value.set(currentMouse.x, currentMouse.y);
+
+    material.uniforms.u_time.value = clock.getElapsedTime();
+
+    renderer.render(scene, camera);
+  };
+
+  animate();
+});
+
+onUnmounted(() => {
+  const heroEl = heroRef.value;
+  if (heroEl) {
+    heroEl.removeEventListener('mousemove', handleMouseMove);
+    heroEl.removeEventListener('mouseleave', handleMouseLeave);
+  }
+  window.removeEventListener('resize', handleResize);
+
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+
+  if (renderer) {
+    renderer.dispose();
+  }
+  if (material) {
+    material.dispose();
+  }
+  if (scene) {
+    scene.clear();
+  }
 });
 </script>
 

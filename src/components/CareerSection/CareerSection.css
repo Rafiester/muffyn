@@ -18,7 +18,7 @@
 }
 
 .career-header {
-  text-align: center;
+  text-align: left;
   margin-bottom: 60px;
 }
 
@@ -43,8 +43,7 @@
 
 /* Timeline structure */
 .timeline-container {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
   position: relative;
 }
 

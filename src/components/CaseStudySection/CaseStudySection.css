@@ -120,3 +120,27 @@
     padding: 28px 24px;
   }
 }
+
+/* Section Header Styles */
+.case-study-header {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 0 50px 0;
+}
+
+.case-study-header .section-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+.case-study-header .section-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0;
+}

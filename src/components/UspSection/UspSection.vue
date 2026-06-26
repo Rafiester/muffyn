@@ -4,6 +4,12 @@
       
       <!-- Left Column: Title, Description, and Stats Grid -->
       <div class="usp-left">
+        <!-- Section Prefix -->
+        <div class="section-prefix">
+          <span class="prefix-line"></span>
+          <span class="prefix-text">{{ prefix }}</span>
+        </div>
+
         <h2 class="usp-title" v-html="formattedTitle"></h2>
         
         <p class="usp-description">
@@ -83,6 +89,10 @@
 import { computed } from 'vue';
 
 const props = defineProps({
+  prefix: {
+    type: String,
+    default: 'SERVICES'
+  },
   title: {
     type: String,
     default: ''

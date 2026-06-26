@@ -40,6 +40,8 @@
   display: flex;
   gap: 32px;
   align-items: center;
+  margin-left: auto;
+  margin-right: 20px;
 }
 
 .nav-link {

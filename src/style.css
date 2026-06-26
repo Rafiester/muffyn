@@ -114,3 +114,42 @@ button {
 .btn-pill:active {
   transform: translateY(-1px);
 }
+
+.btn-pill.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.btn-pill.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.15);
+}
+
+
+/* Section Prefix Eyebrow Eyecatcher */
+.section-prefix {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.section-prefix .prefix-line {
+  width: 32px;
+  height: 2px;
+  background-color: var(--text-secondary);
+  opacity: 0.4;
+}
+
+.section-prefix .prefix-text {
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+

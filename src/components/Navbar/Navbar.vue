@@ -52,7 +52,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const props = defineProps({
   logo: {
     type: String,
-    default: 'PORTFOLIO'
+    default: 'RAFI'
   }
 });
 

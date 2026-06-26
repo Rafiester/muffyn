@@ -9,6 +9,7 @@
   /* Clear fixed navbar */
   padding-bottom: 20px;
   overflow: hidden;
+  cursor: none;
 }
 
 .hero-container {
@@ -85,7 +86,7 @@
   font-size: 20px;
   color: var(--text-secondary);
   line-height: 1.6;
-  text-transform: none; /* Keep natural case for description in screenshot */
+  text-transform: none;
   max-width: 750px;
 }
 
@@ -173,7 +174,6 @@
   z-index: 2;
   width: 320px;
   height: 384px;
-  /* Stays within bounds of circle and aspect ratio */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,10 +217,10 @@
   color: #90a4ae;
   opacity: 0.6;
   transition: var(--transition-smooth);
-  background-color: #1a1b21; /* Dark matte background */
-  border-radius: 5px; /* 5px/5dp rounded corner */
-  padding: 12px 24px; /* Card padding */
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 4px 10px rgba(0, 0, 0, 0.2); /* Depth */
+  background-color: #1a1b21;
+  border-radius: 5px;
+  padding: 12px 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.25);
   min-width: 140px;
   height: 52px;
@@ -231,7 +231,7 @@
   opacity: 1;
   color: var(--text-primary);
   transform: translateY(-2px);
-  background-color: #202128; /* Slightly lighter on hover */
+  background-color: #202128;
   border-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
@@ -248,7 +248,6 @@
     opacity: 0;
     transform: translateY(40px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -259,7 +258,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -295,4 +293,43 @@
     gap: 16px;
     margin: 20px auto;
   }
+}
+
+/* WebGL Background Canvas Layer */
+.bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Custom Follower Cursor */
+.custom-cursor {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.3s ease, transform 0.1s ease-out;
+}
+
+.custom-cursor.visible {
+  opacity: 1;
+}
+
+/* Override default cursor behavior for interactive elements inside the section */
+.hero-section a,
+.hero-section button,
+.hero-section .social-icon,
+.hero-section .client-logo-item {
+  cursor: pointer;
 }

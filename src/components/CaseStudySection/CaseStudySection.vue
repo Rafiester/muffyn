@@ -1,6 +1,17 @@
 <template>
   <section class="case-study-section" id="case-study-section">
     <div class="case-study-container">
+      <!-- Section Header -->
+      <div class="case-study-header">
+        <!-- Section Prefix -->
+        <div class="section-prefix">
+          <span class="prefix-line"></span>
+          <span class="prefix-text">{{ prefix }}</span>
+        </div>
+        <h2 class="section-title">{{ title }}</h2>
+        <p class="section-desc">{{ description }}</p>
+      </div>
+
       <div class="case-study-grid">
         <div v-for="(card, index) in displayCards" :key="index" class="case-card">
           <div class="icon-circle">
@@ -37,6 +48,18 @@
 import { computed } from 'vue';
 
 const props = defineProps({
+  prefix: {
+    type: String,
+    default: 'PORTFOLIO'
+  },
+  title: {
+    type: String,
+    default: 'Case Studies'
+  },
+  description: {
+    type: String,
+    default: 'A showcase of my recent creative works, system configurations, and frontend development projects.'
+  },
   cards: {
     type: Array,
     default: () => []

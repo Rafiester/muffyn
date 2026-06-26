@@ -1,20 +1,23 @@
 <template>
-  <section class="testimonial-section" id="testimonial-section">
+  <section class="testimonial-section" id="testimonial">
     <div class="testimonial-container">
       <!-- Section Header -->
       <div class="testimonial-header">
-        <h2 class="testimonial-title">What They <span class="highlight">Say</span></h2>
+        <!-- Section Prefix -->
+        <div class="section-prefix">
+          <span class="prefix-line"></span>
+          <span class="prefix-text">{{ prefix }}</span>
+        </div>
+        <h2 class="testimonial-title" v-html="formattedTitle"></h2>
       </div>
 
       <!-- Testimonial Grid -->
       <div class="testimonial-grid">
-        <!-- Card 1 -->
-        <div class="testimonial-card">
+        <div v-for="(item, index) in testimonials" :key="index" class="testimonial-card">
           <!-- Stylized Quote Icon -->
           <div class="quote-icon">“</div>
-          <p class="review-text">"An exceptional PM who truly understands both the design aesthetic and the technical complexity. Kept our dev team perfectly on track."</p>
+          <p class="review-text">{{ item.text }}</p>
           <div class="author-block">
-            <!-- Premium inline SVG avatar representing Lead Developer -->
             <div class="avatar-wrapper">
               <svg viewBox="0 0 100 100" class="avatar-svg">
                 <circle cx="50" cy="50" r="50" fill="#424454"/>
@@ -23,29 +26,8 @@
               </svg>
             </div>
             <div class="author-info">
-              <span class="author-name">Musdi</span>
-              <span class="author-role">Lead Developer</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="testimonial-card">
-          <!-- Stylized Quote Icon -->
-          <div class="quote-icon">“</div>
-          <p class="review-text">"Incredibly organized and proactive. Handled our shifting requirements seamlessly without compromising the final delivery quality."</p>
-          <div class="author-block">
-            <!-- Premium inline SVG avatar representing Product Owner -->
-            <div class="avatar-wrapper">
-              <svg viewBox="0 0 100 100" class="avatar-svg">
-                <circle cx="50" cy="50" r="50" fill="#424454"/>
-                <circle cx="50" cy="40" r="20" fill="#F0A500"/>
-                <path d="M22 75c0-12 8-22 28-22s28 10 28 22z" fill="#FFFFFF"/>
-              </svg>
-            </div>
-            <div class="author-info">
-              <span class="author-name">Sarah</span>
-              <span class="author-role">Product Owner</span>
+              <span class="author-name">{{ item.name }}</span>
+              <span class="author-role">{{ item.role }}</span>
             </div>
           </div>
         </div>
@@ -55,7 +37,28 @@
 </template>
 
 <script setup>
-// Testimonial / Review Section Component
+import { computed } from 'vue';
+
+const props = defineProps({
+  prefix: {
+    type: String,
+    default: 'TESTIMONIAL'
+  },
+  title: {
+    type: String,
+    default: 'What They Say'
+  },
+  testimonials: {
+    type: Array,
+    default: () => []
+  }
+});
+
+const formattedTitle = computed(() => {
+  let text = props.title || 'What They Say';
+  const regex = new RegExp('Say', 'gi');
+  return text.replace(regex, `<span class="highlight">Say</span>`);
+});
 </script>
 
 <style scoped>

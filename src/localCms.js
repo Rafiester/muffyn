@@ -5,7 +5,7 @@ const AUTH_TOKEN_KEY = 'portfolio_admin_token';
 
 // Default initial data
 const DEFAULT_SITE_DATA = {
-  navbar_logo: 'PORTFOLIO',
+  navbar_logo: 'RAFI',
   hero_title: 'IT PROJECT\nMANAGER &\nSYSTEM ANALYST',
   hero_description: 'Crafting precise digital products with Vue.js, Nuxt, and the modern web stack.',
   portrait_url: '/avatar.png',
@@ -25,10 +25,46 @@ const DEFAULT_SITE_DATA = {
     { title: 'Ux Research', projects: '100+ Project' },
     { title: 'Mobile App Design', projects: '100+ Project' }
   ],
+  case_studies_title: 'Case Studies',
+  case_studies_description: 'A showcase of my recent creative works, system configurations, and frontend development projects.',
   case_studies: [
     { title: 'Ui/Ux Design', desc: 'i have many years experience with social media design, creating art work and designs that will promote businesses. i have a lot', button_text: 'See More', icon_type: 'design' },
     { title: 'Web Design', desc: 'i have many years experience with social media design, creating art work and designs that will promote businesses. i have a lot', button_text: 'See More', icon_type: 'web' },
     { title: 'Ui/Ux Design', desc: 'i have many years experience with social media design, creating art work and designs that will promote businesses. i have a lot', button_text: 'See More', icon_type: 'mobile' }
+  ],
+  career_prefix: 'EXPERIENCE',
+  career_title: 'Professional Journey',
+  career_subtitle: 'My track record in delivering tech solutions.',
+  career_items: [
+    {
+      date: "2024 - Present",
+      role: "IT Project Manager at Tech Solutions EST. 2026 | Jakarta",
+      desc: "Spearheaded the development and deployment of Project X1. Managed cross-functional teams of developers and designers, overseeing a project budget of Rp 2.500.000.000 while ensuring strict timeline adherence and zero scope creep."
+    },
+    {
+      date: "2021 - 2024",
+      role: "Scrum Master & Technical PM | Digital Agency | Semarang",
+      desc: "Facilitated Agile ceremonies, removed blockers for the engineering team, and bridged the communication gap between stakeholders and technical execution."
+    },
+    {
+      date: "2019 - 2021",
+      role: "Junior Web Developer | Tech Startup | Bandung",
+      desc: "Developed frontend landing pages and user dashboards using Vue.js and Bootstrap. Collaborated closely with UI designers to execute design layouts."
+    }
+  ],
+  testimonial_prefix: 'TESTIMONIAL',
+  testimonial_title: 'What They Say',
+  testimonial_items: [
+    {
+      name: "Musdi",
+      role: "Lead Developer",
+      text: '"An exceptional PM who truly understands both the design aesthetic and the technical complexity. Kept our dev team perfectly on track."'
+    },
+    {
+      name: "Sarah",
+      role: "Product Owner",
+      text: '"Incredibly organized and proactive. Handled our shifting requirements seamlessly without compromising the final delivery quality."'
+    }
   ]
 };
 
@@ -70,11 +106,44 @@ export const localCms = {
     if (!siteDataObj.hero_prefix) {
       siteDataObj.hero_prefix = DEFAULT_SITE_DATA.hero_prefix;
     }
+    if (!siteDataObj.navbar_logo || siteDataObj.navbar_logo === 'PORTFOLIO') {
+      siteDataObj.navbar_logo = 'RAFI';
+    }
+
+    let needsSave = false;
+    if (!siteDataObj.career_items) {
+      siteDataObj.career_items = DEFAULT_SITE_DATA.career_items;
+      needsSave = true;
+    }
+    if (!siteDataObj.career_prefix) {
+      siteDataObj.career_prefix = DEFAULT_SITE_DATA.career_prefix;
+      needsSave = true;
+    }
+    if (!siteDataObj.career_title) {
+      siteDataObj.career_title = DEFAULT_SITE_DATA.career_title;
+      needsSave = true;
+    }
+    if (!siteDataObj.career_subtitle) {
+      siteDataObj.career_subtitle = DEFAULT_SITE_DATA.career_subtitle;
+      needsSave = true;
+    }
+    if (!siteDataObj.testimonial_prefix) {
+      siteDataObj.testimonial_prefix = DEFAULT_SITE_DATA.testimonial_prefix;
+      needsSave = true;
+    }
+    if (!siteDataObj.testimonial_title) {
+      siteDataObj.testimonial_title = DEFAULT_SITE_DATA.testimonial_title;
+      needsSave = true;
+    }
+    if (!siteDataObj.testimonial_items) {
+      siteDataObj.testimonial_items = DEFAULT_SITE_DATA.testimonial_items;
+      needsSave = true;
+    }
 
     // Backward compatibility merge with defaults
     siteDataObj = { ...DEFAULT_SITE_DATA, ...siteDataObj };
 
-    if (!siteData || siteDataObj.hero_title === DEFAULT_SITE_DATA.hero_title) {
+    if (!siteData || siteDataObj.hero_title === DEFAULT_SITE_DATA.hero_title || needsSave) {
       localStorage.setItem(SITE_DATA_KEY, JSON.stringify(siteDataObj));
     }
     if (!socialLinks) {

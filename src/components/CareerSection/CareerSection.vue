@@ -3,8 +3,13 @@
     <div class="career-container">
       <!-- Section Header -->
       <div class="career-header">
-        <h2 class="career-title">Professional <span class="highlight">Journey</span></h2>
-        <p class="career-subtitle">My track record in delivering tech solutions.</p>
+        <!-- Section Prefix -->
+        <div class="section-prefix">
+          <span class="prefix-line"></span>
+          <span class="prefix-text">{{ prefix }}</span>
+        </div>
+        <h2 class="career-title" v-html="formattedTitle"></h2>
+        <p class="career-subtitle">{{ subtitle }}</p>
       </div>
 
       <!-- Timeline Wrapper -->
@@ -40,25 +45,32 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
-const timelineItems = ref([
-  {
-    date: "2024 - Present",
-    role: "IT Project Manager at Tech Solutions EST. 2026 | Jakarta",
-    desc: "Spearheaded the development and deployment of Project X1. Managed cross-functional teams of developers and designers, overseeing a project budget of Rp 2.500.000.000 while ensuring strict timeline adherence and zero scope creep."
+const props = defineProps({
+  prefix: {
+    type: String,
+    default: 'EXPERIENCE'
   },
-  {
-    date: "2021 - 2024",
-    role: "Scrum Master & Technical PM | Digital Agency | Semarang",
-    desc: "Facilitated Agile ceremonies, removed blockers for the engineering team, and bridged the communication gap between stakeholders and technical execution."
+  title: {
+    type: String,
+    default: 'Professional Journey'
   },
-  {
-    date: "2019 - 2021",
-    role: "Junior Web Developer | Tech Startup | Bandung",
-    desc: "Developed frontend landing pages and user dashboards using Vue.js and Bootstrap. Collaborated closely with UI designers to execute design layouts."
+  subtitle: {
+    type: String,
+    default: 'My track record in delivering tech solutions.'
+  },
+  timelineItems: {
+    type: Array,
+    default: () => []
   }
-]);
+});
+
+const formattedTitle = computed(() => {
+  let text = props.title || 'Professional Journey';
+  const regex = new RegExp('Journey', 'gi');
+  return text.replace(regex, `<span class="highlight">Journey</span>`);
+});
 
 const scrollContainer = ref(null);
 const showScrollIndicator = ref(true);
