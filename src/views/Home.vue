@@ -6,7 +6,6 @@ import HeroSection from '../components/HeroSection/HeroSection.vue';
 import UspSection from '../components/UspSection/UspSection.vue';
 import CaseStudySection from '../components/CaseStudySection/CaseStudySection.vue';
 import CareerSection from '../components/CareerSection/CareerSection.vue';
-import TestimonialSection from '../components/TestimonialSection/TestimonialSection.vue';
 
 // Site configuration state with static fallbacks
 const siteData = ref({
@@ -78,11 +77,6 @@ onMounted(() => {
         :title="siteData.career_title"
         :subtitle="siteData.career_subtitle"
         :timelineItems="siteData.career_items"
-      />
-      <TestimonialSection 
-        :prefix="siteData.testimonial_prefix"
-        :title="siteData.testimonial_title"
-        :testimonials="siteData.testimonial_items"
       />
     </main>
   </div>

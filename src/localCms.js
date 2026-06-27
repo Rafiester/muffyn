@@ -51,20 +51,6 @@ const DEFAULT_SITE_DATA = {
       role: "Junior Web Developer | Tech Startup | Bandung",
       desc: "Developed frontend landing pages and user dashboards using Vue.js and Bootstrap. Collaborated closely with UI designers to execute design layouts."
     }
-  ],
-  testimonial_prefix: 'TESTIMONIAL',
-  testimonial_title: 'What They Say',
-  testimonial_items: [
-    {
-      name: "Musdi",
-      role: "Lead Developer",
-      text: '"An exceptional PM who truly understands both the design aesthetic and the technical complexity. Kept our dev team perfectly on track."'
-    },
-    {
-      name: "Sarah",
-      role: "Product Owner",
-      text: '"Incredibly organized and proactive. Handled our shifting requirements seamlessly without compromising the final delivery quality."'
-    }
   ]
 };
 
@@ -127,18 +113,7 @@ export const localCms = {
       siteDataObj.career_subtitle = DEFAULT_SITE_DATA.career_subtitle;
       needsSave = true;
     }
-    if (!siteDataObj.testimonial_prefix) {
-      siteDataObj.testimonial_prefix = DEFAULT_SITE_DATA.testimonial_prefix;
-      needsSave = true;
-    }
-    if (!siteDataObj.testimonial_title) {
-      siteDataObj.testimonial_title = DEFAULT_SITE_DATA.testimonial_title;
-      needsSave = true;
-    }
-    if (!siteDataObj.testimonial_items) {
-      siteDataObj.testimonial_items = DEFAULT_SITE_DATA.testimonial_items;
-      needsSave = true;
-    }
+
 
     // Backward compatibility merge with defaults
     siteDataObj = { ...DEFAULT_SITE_DATA, ...siteDataObj };
