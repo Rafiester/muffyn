@@ -234,6 +234,28 @@
                     <label for="hero-description" class="form-label">Hero Description</label>
                     <textarea id="hero-description" v-model="siteData.hero_description" class="form-input text-area" rows="3" required></textarea>
                   </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="hero-cv-btn-text" class="form-label">Download Button Label</label>
+                    <input type="text" id="hero-cv-btn-text" v-model="siteData.cv_button_text" class="form-input" placeholder="Download CV" />
+                    <span class="hint-text">The text displayed on the download button in the hero section.</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="hero-cv" class="form-label">Upload CV File (PDF)</label>
+                    <div class="cv-upload-area">
+                      <input type="file" id="hero-cv" accept=".pdf" @change="handleCvUpload" class="form-input-file" />
+                      <div v-if="siteData.cv_filename" class="cv-file-info">
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="flex-shrink: 0;">
+                          <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" fill="currentColor"/>
+                        </svg>
+                        <span class="cv-filename">{{ siteData.cv_filename }}</span>
+                        <span v-if="siteData.cv_uploaded_at" class="cv-upload-date">Uploaded {{ siteData.cv_uploaded_at }}</span>
+                        <button type="button" class="cv-remove-btn" @click="removeCv" id="btn-remove-cv">Remove</button>
+                      </div>
+                      <span class="hint-text">Upload a PDF file (max 5MB). It will be available via the download button on the hero section.</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -282,6 +304,16 @@
                     <div class="row-cell cell-svg">
                       <label class="form-label">Custom SVG Markup (Optional)</label>
                       <input type="text" v-model="client.logo_svg" class="form-input code-font" placeholder="Leave empty for standard text brand rendering" />
+                      <label class="form-label mt-2">Upload Logo Image (PNG/JPG/SVG)</label>
+                      <input type="file" accept=".png,.jpg,.jpeg,.svg" @change="event => handleClientLogoUpload(event, index)" class="form-input-file" />
+                      <div v-if="client.logo_filename" class="cv-file-info mt-2">
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="flex-shrink: 0;">
+                          <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" fill="currentColor"/>
+                        </svg>
+                        <span class="cv-filename">{{ client.logo_filename }}</span>
+                        <button type="button" class="cv-remove-btn" @click="removeClientLogo(index)" id="btn-remove-logo-{{ index }}">Remove</button>
+                      </div>
+                      <span class="hint-text">Upload a logo image (max 2 MB). It will appear in the hero banner.</span>
                     </div>
                   </div>
                 </div>
@@ -636,6 +668,10 @@ const siteData = ref({
   hero_description: '',
   portrait_url: '',
   hero_prefix: '',
+  cv_data: '',
+  cv_filename: '',
+  cv_button_text: 'Download CV',
+  cv_uploaded_at: '',
   about_title: '',
   about_description: '',
   about_story: '',
@@ -666,6 +702,34 @@ const managementSkillsText = computed({
   get: () => (siteData.value.about_management_skills || []).join(', '),
   set: (val) => { siteData.value.about_management_skills = val.split(',').map(s => s.trim()).filter(Boolean); }
 });
+
+const handleClientLogoUpload = (event, idx) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const allowed = ['image/png', 'image/jpeg', 'image/svg+xml'];
+  if (!allowed.includes(file.type)) {
+    showNotification('Supported formats: PNG, JPG, SVG', 'error');
+    return;
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    showNotification('Logo must be under 2 MB', 'error');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    siteData.value.clientLogos[idx].logo_data = e.target.result;
+    siteData.value.clientLogos[idx].logo_filename = file.name;
+    showNotification(`Logo "${file.name}" loaded for client #${idx + 1}`);
+  };
+  reader.readAsDataURL(file);
+};
+
+const removeClientLogo = idx => {
+  siteData.value.clientLogos[idx].logo_data = '';
+  siteData.value.clientLogos[idx].logo_filename = '';
+  siteData.value.clientLogos[idx].logo_svg = '';
+  showNotification(`Logo removed for client #${idx + 1}`);
+};
 
 const addCareerItem = () => {
   if (!siteData.value.career_items) {

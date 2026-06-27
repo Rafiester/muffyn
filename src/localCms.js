@@ -10,6 +10,10 @@ const DEFAULT_SITE_DATA = {
   hero_description: 'Crafting precise digital products with Vue.js, Nuxt, and the modern web stack.',
   portrait_url: '/avatar.png',
   hero_prefix: 'RAFIESTER',
+  cv_data: '',
+  cv_filename: '',
+  cv_button_text: 'Download CV',
+  cv_uploaded_at: '',
   usp_title: 'What Can I Do For Your Needs',
   usp_description: "lorem ipsum is simply dummy text of the printing and typesetting industry. lorem ipsum has been the industry's standard dummy text ever since the",
   meta_title: 'Professional | Graphic Designer & Web Developer Portfolio',
@@ -69,11 +73,11 @@ const DEFAULT_SOCIAL_LINKS = [
 ];
 
 const DEFAULT_CLIENT_LOGOS = [
-  { name: 'ASUS', logo_svg: null },
-  { name: 'Allianz', logo_svg: null },
-  { name: 'CHASE', logo_svg: null },
-  { name: 'The New York Times', logo_svg: null },
-  { name: 'LinkedIn', logo_svg: null }
+  { name: 'ASUS', logo_svg: null, logo_data: '', logo_filename: '' },
+  { name: 'Allianz', logo_svg: null, logo_data: '', logo_filename: '' },
+  { name: 'CHASE', logo_svg: null, logo_data: '', logo_filename: '' },
+  { name: 'The New York Times', logo_svg: null, logo_data: '', logo_filename: '' },
+  { name: 'LinkedIn', logo_svg: null, logo_data: '', logo_filename: '' }
 ];
 
 export const localCms = {

@@ -35,7 +35,13 @@
         </p>
         
         <div class="hero-actions">
-          <a href="#" class="btn-pill">Download CV</a>
+          <a 
+            v-if="cvData" 
+            :href="cvData" 
+            :download="cvFilename || 'CV.pdf'" 
+            class="btn-pill"
+          >{{ cvButtonText || 'Download CV' }}</a>
+          <span v-else class="btn-pill btn-pill-disabled" style="opacity: 0.5; cursor: not-allowed;">{{ cvButtonText || 'Download CV' }}</span>
           
           <div class="social-links">
             <a 
@@ -77,11 +83,15 @@
         :key="index"
         class="client-logo-item"
       >
-        <!-- Render custom inline SVG from CMS if available -->
-        <span v-if="client.logo_svg" v-html="client.logo_svg"></span>
-        
-        <!-- Standard Vector SVGs based on client brand name -->
+        <!-- Render client logo: uploaded image overrides SVG -->
+        <template v-if="client.logo_data">
+          <img :src="client.logo_data" :alt="client.name" class="client-banner-img" />
+        </template>
+        <template v-else-if="client.logo_svg">
+          <span v-html="client.logo_svg"></span>
+        </template>
         <template v-else>
+          <!-- Standard Vector SVGs based on client brand name -->
           <svg v-if="client.name.toLowerCase() === 'asus'" viewBox="0 0 80 20" class="client-logo-svg" aria-label="ASUS">
             <text x="50%" y="15" font-family="'Poppins', sans-serif" font-weight="900" font-size="16" fill="currentColor" text-anchor="middle" letter-spacing="1">ASUS</text>
           </svg>
@@ -106,13 +116,6 @@
           </svg>
           <svg v-else-if="client.name.toLowerCase() === 'the new york times'" viewBox="0 0 150 24" class="client-logo-svg" aria-label="The New York Times">
             <text x="50%" y="16" font-family="'Georgia', serif" font-weight="bold" font-style="italic" font-size="11" fill="currentColor" text-anchor="middle" letter-spacing="0.5">The New York Times</text>
-          </svg>
-          <svg v-else-if="client.name.toLowerCase() === 'linkedin'" viewBox="0 0 90 24" class="client-logo-svg" aria-label="LinkedIn">
-            <g fill="currentColor">
-              <text x="0" y="17" font-family="'Poppins', sans-serif" font-weight="700" font-size="14">Linked</text>
-              <rect x="58" y="3" width="18" height="18" rx="3"/>
-              <text x="67" y="16" font-family="'Poppins', sans-serif" font-weight="800" font-size="12" fill="#32333F" text-anchor="middle">in</text>
-            </g>
           </svg>
           <span v-else class="fallback-client-text">{{ client.name }}</span>
         </template>
@@ -150,6 +153,18 @@ const props = defineProps({
   clientLogos: {
     type: Array,
     default: () => []
+  },
+  cvData: {
+    type: String,
+    default: ''
+  },
+  cvFilename: {
+    type: String,
+    default: ''
+  },
+  cvButtonText: {
+    type: String,
+    default: 'Download CV'
   }
 });
 

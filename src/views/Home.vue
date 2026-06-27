@@ -61,6 +61,9 @@ onMounted(() => {
         :portraitUrl="siteData.portrait_url"
         :socialLinks="socialLinks"
         :clientLogos="clientLogos"
+        :cvData="siteData.cv_data"
+        :cvFilename="siteData.cv_filename"
+        :cvButtonText="siteData.cv_button_text"
       />
       <UspSection 
         :title="siteData.usp_title"
