@@ -76,6 +76,14 @@
       </div>
     </div>
 
+    <!-- Scroll Down Indicator -->
+    <div class="scroll-down-indicator" @click="scrollToContent" role="button" aria-label="Scroll down to services">
+      <div class="mouse-icon">
+        <span class="mouse-wheel"></span>
+      </div>
+      <span class="scroll-text">Scroll Down</span>
+    </div>
+
     <!-- Bottom Overlapping Banner (Client Logos) - Placed outside container and centered -->
     <div class="client-banner">
       <span 
@@ -158,6 +166,13 @@ const formattedTitle = computed(() => {
   });
   return text;
 });
+
+const scrollToContent = () => {
+  const el = document.getElementById('services');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 const heroRef = ref(null);
 const cursorX = ref(0);

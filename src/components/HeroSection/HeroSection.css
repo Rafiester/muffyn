@@ -331,6 +331,75 @@
 .hero-section a,
 .hero-section button,
 .hero-section .social-icon,
-.hero-section .client-logo-item {
+.hero-section .client-logo-item,
+.hero-section .scroll-down-indicator {
   cursor: pointer;
+}
+
+/* Scroll Down Indicator */
+.scroll-down-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  z-index: 25;
+  margin: 15px auto 5px auto;
+  align-self: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  user-select: none;
+}
+
+.scroll-down-indicator:hover {
+  transform: translateY(2px);
+  opacity: 0.8;
+}
+
+.mouse-icon {
+  width: 20px;
+  height: 32px;
+  border: 2px solid var(--text-secondary);
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  opacity: 0.6;
+}
+
+.mouse-wheel {
+  width: 3px;
+  height: 6px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 6px;
+  animation: scrollWheelAnim 1.6s infinite ease-in-out;
+}
+
+.scroll-text {
+  font-family: 'Geologica', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+
+@keyframes scrollWheelAnim {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
