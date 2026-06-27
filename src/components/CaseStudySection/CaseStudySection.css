@@ -145,3 +145,10 @@
   max-width: 600px;
   margin: 0;
 }
+
+.service-icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 4px;
+}

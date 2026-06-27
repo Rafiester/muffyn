@@ -15,8 +15,9 @@
       <div class="case-study-grid">
         <div v-for="(card, index) in displayCards" :key="index" class="case-card">
           <div class="icon-circle">
+            <img v-if="card.icon_data" :src="card.icon_data" class="service-icon-img" alt="Card Icon" />
             <!-- UI/UX Ruler & Pencil Icon -->
-            <svg v-if="card.icon_type === 'design' || (!card.icon_type && index === 0)" class="service-icon" viewBox="0 0 24 24" width="28" height="28">
+            <svg v-else-if="card.icon_type === 'design' || (!card.icon_type && index === 0)" class="service-icon" viewBox="0 0 24 24" width="28" height="28">
               <path d="M14.7 5.7l-1.4-1.4c-.4-.4-1-.4-1.4 0L3.5 12.7c-.4.4-.4 1 0 1.4l1.4 1.4c.4.4 1 .4 1.4 0L14.7 7.1c.4-.4.4-1 0-1.4zm-9.1 7.7l-.7-.7.7-.7.7.7-.7.7zm15.1-6.1l-2.1-2.1c-.4-.4-1-.4-1.4 0L15.8 6.6c-.4.4-.4 1 0 1.4l2.1 2.1c.4.4 1 .4 1.4 0l1.4-1.4c.4-.4.4-1 0-1.4z" fill="currentColor"/>
               <path d="M4 20h3l11-11-3-3L4 17v3z" fill="currentColor"/>
             </svg>

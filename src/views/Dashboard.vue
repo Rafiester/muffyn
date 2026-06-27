@@ -297,14 +297,12 @@
                 
                 <div class="logos-list">
                   <div v-for="(client, index) in clientLogos" :key="index" class="form-row-fluent">
-                    <div class="row-cell cell-brand">
+                                        <div class="row-cell cell-brand">
                       <label class="form-label">Brand Name</label>
                       <input type="text" v-model="client.name" class="form-input" required />
                     </div>
                     <div class="row-cell cell-svg">
-                      <label class="form-label">Custom SVG Markup (Optional)</label>
-                      <input type="text" v-model="client.logo_svg" class="form-input code-font" placeholder="Leave empty for standard text brand rendering" />
-                      <label class="form-label mt-2">Upload Logo Image (PNG/JPG/SVG)</label>
+                      <label class="form-label">Upload Logo Image (PNG/JPG/SVG)</label>
                       <input type="file" accept=".png,.jpg,.jpeg,.svg" @change="event => handleClientLogoUpload(event, index)" class="form-input-file" />
                       <div v-if="client.logo_filename" class="cv-file-info mt-2">
                         <svg viewBox="0 0 24 24" width="16" height="16" style="flex-shrink: 0;">
@@ -448,12 +446,21 @@
                     
                     <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
                       <div class="row-cell">
-                        <label class="form-label" style="font-size: 0.72rem;">Card Icon Type</label>
-                        <select v-model="study.icon_type" class="form-input" style="background-color: #14151c;" required>
-                          <option value="design">UI/UX (Ruler & Pencil)</option>
-                          <option value="web">Web Design (Browser Window)</option>
-                          <option value="mobile">App Development (Mobile Screen)</option>
-                        </select>
+                        <label class="form-label" style="font-size: 0.72rem;">Upload Card Icon</label>
+                        <input type="file" accept=".png,.jpg,.jpeg,.svg" @change="event => handleCardIconUpload(event, index)" class="form-input-file" />
+                        
+                        <div v-if="study.icon_filename" class="cv-file-info mt-2" style="display: flex; align-items: center; gap: 10px;">
+                          <div v-if="study.icon_data" class="card-icon-preview" style="width: 28px; height: 28px; background-color: #424454; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">
+                            <img :src="study.icon_data" style="width: 100%; height: 100%; object-fit: contain;" alt="Preview" />
+                          </div>
+                          <span class="cv-filename">{{ study.icon_filename }}</span>
+                          <button type="button" class="cv-remove-btn" @click="removeCardIcon(index)" :id="'btn-remove-icon-' + index">Remove</button>
+                        </div>
+                        
+                        <span class="hint-text" style="margin-top: 4px; line-height: 1.4;">
+                          Recommended Size: <strong>64 × 64 px (Square)</strong>. Supported Formats: <strong>PNG, JPG, SVG</strong>. Max size: <strong>1 MB</strong>.<br/>
+                          <em>If empty, it falls back to the default vector icon.</em>
+                        </span>
                       </div>
                     </div>
 
@@ -729,6 +736,38 @@ const removeClientLogo = idx => {
   siteData.value.clientLogos[idx].logo_filename = '';
   siteData.value.clientLogos[idx].logo_svg = '';
   showNotification(`Logo removed for client #${idx + 1}`);
+};
+
+const handleCardIconUpload = (event, idx) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const allowed = ['image/png', 'image/jpeg', 'image/svg+xml'];
+  if (!allowed.includes(file.type)) {
+    showNotification('Supported formats: PNG, JPG, SVG', 'error');
+    return;
+  }
+  if (file.size > 1 * 1024 * 1024) {
+    showNotification('Card icon must be under 1 MB', 'error');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    if (!siteData.value.case_studies[idx]) {
+      siteData.value.case_studies[idx] = {};
+    }
+    siteData.value.case_studies[idx].icon_data = e.target.result;
+    siteData.value.case_studies[idx].icon_filename = file.name;
+    showNotification(`Icon "${file.name}" loaded for card #${idx + 1}`);
+  };
+  reader.readAsDataURL(file);
+};
+
+const removeCardIcon = idx => {
+  if (siteData.value.case_studies[idx]) {
+    siteData.value.case_studies[idx].icon_data = '';
+    siteData.value.case_studies[idx].icon_filename = '';
+  }
+  showNotification(`Icon removed for card #${idx + 1}`);
 };
 
 const addCareerItem = () => {

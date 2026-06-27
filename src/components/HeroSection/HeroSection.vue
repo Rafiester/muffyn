@@ -87,37 +87,8 @@
         <template v-if="client.logo_data">
           <img :src="client.logo_data" :alt="client.name" class="client-banner-img" />
         </template>
-        <template v-else-if="client.logo_svg">
-          <span v-html="client.logo_svg"></span>
-        </template>
         <template v-else>
-          <!-- Standard Vector SVGs based on client brand name -->
-          <svg v-if="client.name.toLowerCase() === 'asus'" viewBox="0 0 80 20" class="client-logo-svg" aria-label="ASUS">
-            <text x="50%" y="15" font-family="'Poppins', sans-serif" font-weight="900" font-size="16" fill="currentColor" text-anchor="middle" letter-spacing="1">ASUS</text>
-          </svg>
-          <svg v-else-if="client.name.toLowerCase() === 'allianz'" viewBox="0 0 100 24" class="client-logo-svg" aria-label="Allianz">
-            <g fill="currentColor">
-              <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-              <rect x="8" y="7" width="2" height="10" rx="0.5"/>
-              <rect x="11" y="6" width="2" height="12" rx="0.5"/>
-              <rect x="14" y="7" width="2" height="10" rx="0.5"/>
-              <text x="28" y="17" font-family="'Poppins', sans-serif" font-weight="700" font-size="11" letter-spacing="0.5">Allianz</text>
-            </g>
-          </svg>
-          <svg v-else-if="client.name.toLowerCase() === 'chase'" viewBox="0 0 100 24" class="client-logo-svg" aria-label="CHASE">
-            <g fill="currentColor">
-              <path d="M12 4 L18 4 L20 6 L20 12 L18 14 L12 14 L10 12 L10 6 Z" fill="none" stroke="currentColor" stroke-width="2"/>
-              <path d="M12 4 L18 4 L18 7 L12 7 Z"/>
-              <path d="M17 7 L20 7 L20 12 L17 12 Z"/>
-              <path d="M12 11 L18 11 L18 14 L12 14 Z"/>
-              <path d="M10 7 L13 7 L13 12 L10 12 Z"/>
-              <text x="26" y="17" font-family="'Poppins', sans-serif" font-weight="800" font-size="12" letter-spacing="1">CHASE</text>
-            </g>
-          </svg>
-          <svg v-else-if="client.name.toLowerCase() === 'the new york times'" viewBox="0 0 150 24" class="client-logo-svg" aria-label="The New York Times">
-            <text x="50%" y="16" font-family="'Georgia', serif" font-weight="bold" font-style="italic" font-size="11" fill="currentColor" text-anchor="middle" letter-spacing="0.5">The New York Times</text>
-          </svg>
-          <span v-else class="fallback-client-text">{{ client.name }}</span>
+          <span class="fallback-client-text">{{ client.name }}</span>
         </template>
       </span>
     </div>
