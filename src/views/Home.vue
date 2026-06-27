@@ -6,7 +6,7 @@ import HeroSection from '../components/HeroSection/HeroSection.vue';
 import UspSection from '../components/UspSection/UspSection.vue';
 import CaseStudySection from '../components/CaseStudySection/CaseStudySection.vue';
 import CareerSection from '../components/CareerSection/CareerSection.vue';
-import ScrollVelocity from '../components/ScrollVelocity/ScrollVelocity.vue';
+import AboutSection from '../components/AboutSection/AboutSection.vue';
 
 // Site configuration state with static fallbacks
 const siteData = ref({
@@ -79,10 +79,15 @@ onMounted(() => {
         :subtitle="siteData.career_subtitle"
         :timelineItems="siteData.career_items"
       />
-      <ScrollVelocity 
-        :texts="['CREATIVE DEVELOPER', 'DESIGN THINKER', 'PROBLEM SOLVER']"
-        :velocity="60"
-        className="highlight-text"
+      <AboutSection 
+        :title="siteData.about_title"
+        :description="siteData.about_description"
+        :story="siteData.about_story"
+        :techSkills="siteData.about_tech_skills"
+        :managementSkills="siteData.about_management_skills"
+        :statExperience="siteData.about_stat_experience"
+        :statDelivery="siteData.about_stat_delivery"
+        :statScope="siteData.about_stat_scope"
       />
     </main>
   </div>

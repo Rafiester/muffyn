@@ -1,5 +1,5 @@
 <template>
-  <section class="case-study-section" id="case-study-section">
+  <section class="case-study-section" id="portfolio">
     <div class="case-study-container">
       <!-- Section Header -->
       <div class="case-study-header">

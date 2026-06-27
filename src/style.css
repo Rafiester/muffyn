@@ -2,10 +2,10 @@
 
 :root {
   /* Design Tokens */
-  --bg-main: #24252E;
-  --accent: #F0A500;
-  --accent-rgb: 240, 165, 0;
-  --accent-hover: #D99500;
+  --bg-main: #1e1d23;
+  --accent: #bd3636;
+  --accent-rgb: 189, 54, 54;
+  --accent-hover: #a83030;
   --text-primary: #FFFFFF;
   --text-secondary: #9FA0A6;
   --client-banner-bg: #32333F;
@@ -99,8 +99,8 @@ button {
   font-weight: 600;
   font-size: 0.95rem;
   background-color: var(--accent);
-  color: #1a1a24;
-  border: 2px solid transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   transition: var(--transition-bounce);
   box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.2);
 }

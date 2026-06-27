@@ -1,5 +1,5 @@
 .career-section {
-  background-color: #24252E;
+  background-color: var(--bg-main);
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -7,6 +7,7 @@
   justify-content: center;
   box-sizing: border-box;
   padding: 80px 0;
+  position: relative;
 }
 
 .career-container {
@@ -15,6 +16,7 @@
   margin: 0 auto;
   padding: 0 24px;
   position: relative;
+  z-index: 1;
 }
 
 .career-header {
@@ -31,7 +33,7 @@
 }
 
 .career-title .highlight {
-  color: #F0A500;
+  color: var(--accent);
 }
 
 .career-subtitle {
@@ -67,12 +69,12 @@
 }
 
 .timeline-scroll-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(240, 165, 0, 0.3);
+  background: rgba(var(--accent-rgb), 0.3);
   border-radius: 4px;
 }
 
 .timeline-scroll-wrapper::-webkit-scrollbar-thumb:hover {
-  background: rgba(240, 165, 0, 0.6);
+  background: rgba(var(--accent-rgb), 0.6);
 }
 
 .timeline-line {
@@ -103,9 +105,9 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #F0A500;
-  border: 4px solid #24252E; /* Inset effect */
-  box-shadow: 0 0 8px rgba(240, 165, 0, 0.4);
+  background-color: var(--accent);
+  border: 4px solid var(--bg-main); /* Inset effect */
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.4);
   z-index: 5;
 }
 
@@ -121,12 +123,12 @@
 .timeline-content-box:hover {
   transform: translateX(6px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-  border-color: rgba(240, 165, 0, 0.15);
+  border-color: rgba(var(--accent-rgb), 0.15);
 }
 
 .timeline-date {
   display: inline-block;
-  color: #F0A500;
+  color: var(--accent);
   font-size: 0.88rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -159,7 +161,7 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  color: #F0A500;
+  color: var(--accent);
   font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;

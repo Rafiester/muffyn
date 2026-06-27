@@ -9,14 +9,15 @@
       <!-- Desktop Navigation Links -->
       <nav class="navbar-links">
         <a href="#home" class="nav-link active">Home</a>
-        <a href="#about" class="nav-link">About Me</a>
-        <a href="#service" class="nav-link">Service</a>
-        <a href="#testimonial" class="nav-link">Testimonial</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#about" class="nav-link">About me</a>
       </nav>
 
       <!-- CTA (Desktop) -->
       <div class="navbar-actions">
-        <a href="#contact" class="btn-pill">Contact</a>
+        <a href="https://wa.me/6281336191660" target="_blank" rel="noopener noreferrer" class="btn-pill">Get In Touch</a>
       </div>
 
       <!-- Hamburger Menu Button -->
@@ -37,10 +38,11 @@
     <div class="mobile-nav" :class="{ 'is-open': isMenuOpen }" id="mobile-navigation-menu">
       <nav class="mobile-links">
         <a href="#home" class="mobile-link" @click="closeMenu">Home</a>
-        <a href="#about" class="mobile-link" @click="closeMenu">About Me</a>
-        <a href="#service" class="mobile-link" @click="closeMenu">Service</a>
-        <a href="#testimonial" class="mobile-link" @click="closeMenu">Testimonial</a>
-        <a href="#contact" class="btn-pill mobile-contact-btn" @click="closeMenu">Contact</a>
+        <a href="#services" class="mobile-link" @click="closeMenu">Services</a>
+        <a href="#portfolio" class="mobile-link" @click="closeMenu">Portfolio</a>
+        <a href="#experience" class="mobile-link" @click="closeMenu">Experience</a>
+        <a href="#about" class="mobile-link" @click="closeMenu">About me</a>
+        <a href="https://wa.me/6281336191660" target="_blank" rel="noopener noreferrer" class="btn-pill mobile-contact-btn" @click="closeMenu">Get In Touch</a>
       </nav>
     </div>
   </header>

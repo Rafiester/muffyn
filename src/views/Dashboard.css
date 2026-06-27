@@ -719,8 +719,8 @@
   font-size: 0.95rem;
   font-weight: 600;
   background-color: var(--accent);
-  color: #1a1a24;
-  border: none;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   transition: background-color 0.2s, transform 0.1s;
   box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.15);
 }

@@ -92,6 +92,17 @@
           </svg>
           <span class="nav-label">Professional Journey</span>
         </button>
+        <button 
+          class="nav-item" 
+          :class="{ 'active': activeSection === 'about' }"
+          @click="setActiveSection('about')"
+          id="nav-item-about"
+        >
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+          </svg>
+          <span class="nav-label">About Me</span>
+        </button>
       </nav>
       
       <!-- Sidebar Footer -->
@@ -475,7 +486,7 @@
                     <span class="section-badge">02</span>
                     <h4 class="section-title">Timeline Cards</h4>
                   </div>
-                  <button type="button" @click="addCareerItem" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: #1a1a24; border: none; cursor: pointer;" id="btn-add-career-item">
+                    <button type="button" @click="addCareerItem" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: white; border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer;" id="btn-add-career-item">
                     + Add New Card
                   </button>
                 </div>
@@ -520,6 +531,94 @@
             </form>
           </div>
 
+          <!-- Section: About Me (Dashboard Form) -->
+          <div v-if="activeSection === 'about'" class="workspace-card animated-fade-in" id="about-section-card">
+            <div class="card-header">
+              <h3 class="card-title">Manage About Me Section</h3>
+              <p class="card-subtitle">Edit your biography, skill tags, and quick stats highlights.</p>
+            </div>
+            
+            <form @submit.prevent="handleSave" class="dashboard-form">
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">01</span>
+                  <h4 class="section-title">Header and Biography</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="about-title" class="form-label">Section Title</label>
+                    <input type="text" id="about-title" v-model="siteData.about_title" class="form-input" required />
+                    <span class="hint-text">Highlighted terms: "Business" or "Technical" will automatically be highlighted in red accent.</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="about-description" class="form-label">Section Description</label>
+                    <textarea id="about-description" v-model="siteData.about_description" class="form-input text-area" rows="2" required></textarea>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="about-story" class="form-label">The Story (Biography)</label>
+                    <textarea id="about-story" v-model="siteData.about_story" class="form-input text-area" rows="4" required></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">02</span>
+                  <h4 class="section-title">Skill Stack Tagging</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="about-tech-skills" class="form-label">Tech Arsenal (Comma-separated)</label>
+                    <textarea id="about-tech-skills" v-model="techSkillsText" class="form-input text-area" rows="2" placeholder="Vue.js, Nuxt, REST APIs..."></textarea>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="about-management-skills" class="form-label">Management Core (Comma-separated)</label>
+                    <textarea id="about-management-skills" v-model="managementSkillsText" class="form-input text-area" rows="2" placeholder="Agile/Scrum, Jira, Sprint Planning..."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">03</span>
+                  <h4 class="section-title">Bento Grid Quick Stats</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="about-stat-exp" class="form-label">Years Experience Stat</label>
+                    <input type="text" id="about-stat-exp" v-model="siteData.about_stat_experience" class="form-input" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="about-stat-delivery" class="form-label">Delivery Rate Stat</label>
+                    <input type="text" id="about-stat-delivery" v-model="siteData.about_stat_delivery" class="form-input" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="about-stat-scope" class="form-label">Scope Creep Stat</label>
+                    <input type="text" id="about-stat-scope" v-model="siteData.about_stat_scope" class="form-input" required />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Save Button -->
+              <div class="form-actions-bar">
+                <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-about">
+                  <svg viewBox="0 0 24 24" width="16" height="16" class="btn-icon">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" fill="currentColor"/>
+                  </svg>
+                  <span>Save Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
         </div>
       </main>
     </div>
@@ -527,7 +626,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { localCms } from '../localCms';
 
@@ -537,6 +636,14 @@ const siteData = ref({
   hero_description: '',
   portrait_url: '',
   hero_prefix: '',
+  about_title: '',
+  about_description: '',
+  about_story: '',
+  about_tech_skills: [],
+  about_management_skills: [],
+  about_stat_experience: '',
+  about_stat_delivery: '',
+  about_stat_scope: '',
   usp_title: '',
   usp_description: '',
   meta_title: '',
@@ -548,6 +655,16 @@ const siteData = ref({
   career_title: '',
   career_subtitle: '',
   career_items: []
+});
+
+const techSkillsText = computed({
+  get: () => (siteData.value.about_tech_skills || []).join(', '),
+  set: (val) => { siteData.value.about_tech_skills = val.split(',').map(s => s.trim()).filter(Boolean); }
+});
+
+const managementSkillsText = computed({
+  get: () => (siteData.value.about_management_skills || []).join(', '),
+  set: (val) => { siteData.value.about_management_skills = val.split(',').map(s => s.trim()).filter(Boolean); }
 });
 
 const addCareerItem = () => {

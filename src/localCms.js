@@ -51,13 +51,20 @@ const DEFAULT_SITE_DATA = {
       role: "Junior Web Developer | Tech Startup | Bandung",
       desc: "Developed frontend landing pages and user dashboards using Vue.js and Bootstrap. Collaborated closely with UI designers to execute design layouts."
     }
-  ]
+  ],
+  about_title: 'Bridging Business Needs & Technical Execution',
+  about_description: 'A hybrid approach to digital product development, combining system analysis, frontend engineering, and agile project management to deliver successful software solutions.',
+  about_story: 'I am a hybrid professional who speaks both the language of code and the language of business. With a background in system analysis and frontend development (Vue/Nuxt), I transitioned into Project Management to ensure that beautiful code actually solves real-world problems. I build systems, manage timelines, and protect my team\'s focus.',
+  about_tech_skills: ['Vue.js', 'Nuxt', 'REST APIs', 'SQL', 'Figma', 'System Design'],
+  about_management_skills: ['Agile/Scrum', 'Sprint Planning', 'Jira', 'Risk Mitigation', 'Resource Allocation'],
+  about_stat_experience: '5+',
+  about_stat_delivery: '100%',
+  about_stat_scope: 'Zero'
 };
 
 const DEFAULT_SOCIAL_LINKS = [
-  { platform: 'Dribbble', url: '#', is_accent: true },
-  { platform: 'GitHub', url: '#', is_accent: false },
-  { platform: 'Behance', url: '#', is_accent: false },
+  { platform: 'GitHub', url: '#', is_accent: true },
+  { platform: 'Instagram', url: '#', is_accent: false },
   { platform: 'LinkedIn', url: '#', is_accent: false }
 ];
 
@@ -113,6 +120,38 @@ export const localCms = {
       siteDataObj.career_subtitle = DEFAULT_SITE_DATA.career_subtitle;
       needsSave = true;
     }
+    if (!siteDataObj.about_title) {
+      siteDataObj.about_title = DEFAULT_SITE_DATA.about_title;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_description) {
+      siteDataObj.about_description = DEFAULT_SITE_DATA.about_description;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_story) {
+      siteDataObj.about_story = DEFAULT_SITE_DATA.about_story;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_tech_skills) {
+      siteDataObj.about_tech_skills = DEFAULT_SITE_DATA.about_tech_skills;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_management_skills) {
+      siteDataObj.about_management_skills = DEFAULT_SITE_DATA.about_management_skills;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_stat_experience) {
+      siteDataObj.about_stat_experience = DEFAULT_SITE_DATA.about_stat_experience;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_stat_delivery) {
+      siteDataObj.about_stat_delivery = DEFAULT_SITE_DATA.about_stat_delivery;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_stat_scope) {
+      siteDataObj.about_stat_scope = DEFAULT_SITE_DATA.about_stat_scope;
+      needsSave = true;
+    }
 
 
     // Backward compatibility merge with defaults
@@ -130,9 +169,18 @@ export const localCms = {
       localStorage.setItem(CLIENT_LOGOS_KEY, clientLogos);
     }
 
+    let socialLinksList = JSON.parse(socialLinks);
+    socialLinksList = socialLinksList.filter(link => link.platform.toLowerCase() !== 'dribbble');
+    socialLinksList = socialLinksList.map(link => {
+      if (link.platform.toLowerCase() === 'behance') {
+        link.platform = 'Instagram';
+      }
+      return link;
+    });
+
     return {
       siteData: siteDataObj,
-      socialLinks: JSON.parse(socialLinks),
+      socialLinks: socialLinksList,
       clientLogos: JSON.parse(clientLogos)
     };
   },

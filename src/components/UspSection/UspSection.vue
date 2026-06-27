@@ -1,5 +1,5 @@
 <template>
-  <section class="usp-section" id="usp">
+  <section class="usp-section" id="services">
     <div class="container usp-container">
       
       <!-- Left Column: Title, Description, and Stats Grid -->
@@ -35,7 +35,7 @@
             <svg v-if="index === 0" viewBox="0 0 100 70" class="thumbnail-svg">
               <rect x="15" y="10" width="70" height="46" rx="4" fill="#2d303e" stroke="#484d63" stroke-width="1.5"/>
               <rect x="20" y="15" width="60" height="36" rx="2" fill="#1e1f26"/>
-              <rect x="25" y="19" width="16" height="12" rx="1" fill="#f0a500" opacity="0.8"/>
+              <rect x="25" y="19" width="16" height="12" rx="1" fill="#bd3636" opacity="0.8"/>
               <rect x="45" y="19" width="30" height="4" rx="1" fill="#ffffff" opacity="0.3"/>
               <rect x="45" y="27" width="24" height="4" rx="1" fill="#ffffff" opacity="0.2"/>
               <circle cx="28" cy="37" r="2" fill="#ffffff" opacity="0.4"/>
@@ -49,7 +49,7 @@
               <rect x="10" y="8" width="80" height="54" rx="4" fill="#2d303e" stroke="#484d63" stroke-width="1.5"/>
               <rect x="14" y="12" width="72" height="46" rx="2" fill="#1e1f26"/>
               <rect x="20" y="18" width="12" height="12" fill="#ff5252" opacity="0.8" transform="rotate(-5, 26, 24)"/>
-              <rect x="38" y="17" width="12" height="12" fill="#f0a500" opacity="0.8" transform="rotate(3, 44, 23)"/>
+              <rect x="38" y="17" width="12" height="12" fill="#bd3636" opacity="0.8" transform="rotate(3, 44, 23)"/>
               <rect x="56" y="20" width="12" height="12" fill="#4caf50" opacity="0.8" transform="rotate(-8, 62, 26)"/>
               <rect x="28" y="38" width="12" height="12" fill="#00bcd4" opacity="0.8" transform="rotate(6, 34, 44)"/>
               <path d="M32 24 Q44 32 38 44" stroke="#ffffff" stroke-width="1" stroke-dasharray="2 2" fill="none" opacity="0.3"/>
@@ -62,7 +62,7 @@
               <rect x="14" y="12" width="72" height="46" rx="2" fill="#1e1f26"/>
               <rect x="36" y="14" width="28" height="42" rx="3" fill="#111" stroke="#484d63" stroke-width="1"/>
               <rect x="38" y="16" width="24" height="38" rx="1.5" fill="#1e1f26"/>
-              <rect x="41" y="19" width="18" height="10" rx="1" fill="#f0a500" opacity="0.9"/>
+              <rect x="41" y="19" width="18" height="10" rx="1" fill="#bd3636" opacity="0.9"/>
               <rect x="41" y="32" width="18" height="4" rx="0.5" fill="#ffffff" opacity="0.4"/>
               <rect x="41" y="38" width="12" height="4" rx="0.5" fill="#ffffff" opacity="0.2"/>
               <circle cx="50" cy="46" r="3" fill="#ffffff" opacity="0.3"/>

@@ -1,0 +1,201 @@
+.about-section {
+  padding: 100px 0;
+  background-color: var(--backdrop-bg);
+  color: var(--text-primary);
+  position: relative;
+  width: 100%;
+}
+
+.about-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+.about-header {
+  text-align: left;
+  margin-bottom: 48px;
+}
+
+.about-eyebrow {
+  display: block;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.about-title {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+  max-width: 800px;
+  margin: 0;
+}
+
+.about-title .highlight {
+  color: var(--accent);
+}
+
+.about-description {
+  font-family: var(--font-secondary);
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 650px;
+  margin-top: 16px;
+}
+
+/* Bento Box Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.bento-card {
+  background-color: #2A2B36;
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+/* Card 1: Bio */
+.card-bio {
+  grid-column: span 2;
+}
+
+.bio-text {
+  font-family: var(--font-secondary);
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Skills Cards & Tags */
+.skills-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: 50px;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+/* Analyst hover (Electric Blue) */
+.tag-blue:hover {
+  border-color: #4361EE;
+  color: #4361EE;
+  box-shadow: 0 0 10px rgba(67, 97, 238, 0.2);
+}
+
+/* Management hover (Accent/Red) */
+.tag-accent:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 10px rgba(189, 54, 54, 0.2);
+}
+
+/* Card 4: Stats */
+.card-stats {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.stat-number {
+  font-family: var(--font-primary);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-family: var(--font-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+/* Responsive Queries */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .card-bio {
+    grid-column: span 2;
+  }
+  
+  .card-stats {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2rem;
+  }
+  
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .card-bio {
+    grid-column: span 1;
+  }
+  
+  .card-stats {
+    grid-column: span 1;
+    flex-direction: column;
+    gap: 32px;
+    align-items: stretch;
+  }
+  
+  .stat-item {
+    align-items: flex-start;
+  }
+}

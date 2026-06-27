@@ -1,5 +1,5 @@
 .case-study-section {
-  background-color: #24252E;
+  background-color: var(--bg-main);
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -47,7 +47,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
-  color: #F0A500;
+  color: var(--accent);
   flex-shrink: 0;
 }
 
@@ -78,8 +78,8 @@
 
 .btn-see-more {
   background-color: transparent;
-  border: 1px solid #F0A500;
-  color: #F0A500;
+  border: 1px solid var(--accent);
+  color: var(--accent);
   font-family: inherit;
   font-weight: 600;
   font-size: 0.9rem;
@@ -90,8 +90,9 @@
 }
 
 .btn-see-more:hover {
-  background-color: #F0A500;
-  color: #24252E;
+  background-color: var(--accent);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn-see-more:active {
