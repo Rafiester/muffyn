@@ -611,11 +611,6 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="about-tech-skills" class="form-label">Tech Arsenal (Comma-separated)</label>
-                    <textarea id="about-tech-skills" v-model="techSkillsText" class="form-input text-area" rows="2" placeholder="Vue.js, Nuxt, REST APIs..."></textarea>
-                  </div>
-
-                  <div class="form-group col-span-2">
                     <label for="about-management-skills" class="form-label">Management Core (Comma-separated)</label>
                     <textarea id="about-management-skills" v-model="managementSkillsText" class="form-input text-area" rows="2" placeholder="Agile/Scrum, Jira, Sprint Planning..."></textarea>
                   </div>

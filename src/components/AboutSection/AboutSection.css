@@ -82,7 +82,7 @@
 
 /* Card 1: Bio */
 .card-bio {
-  grid-column: span 2;
+  grid-column: span 3;
 }
 
 .bio-text {

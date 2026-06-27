@@ -86,7 +86,6 @@ onMounted(() => {
         :title="siteData.about_title"
         :description="siteData.about_description"
         :story="siteData.about_story"
-        :techSkills="siteData.about_tech_skills"
         :managementSkills="siteData.about_management_skills"
         :statExperience="siteData.about_stat_experience"
         :statDelivery="siteData.about_stat_delivery"

@@ -27,20 +27,12 @@
 
       <!-- Bento Grid Layout -->
       <div class="bento-grid">
-        <!-- Card 1: The Bio (Spans 2 columns on desktop) -->
+        <!-- Card 1: The Bio (Spans 3 columns on desktop) -->
         <div class="bento-card card-bio">
           <h3 class="card-title">The Story</h3>
           <p class="bio-text">
             {{ story }}
           </p>
-        </div>
-
-        <!-- Card 2: System Analyst Stack (Spans 1 column) -->
-        <div class="bento-card card-tech">
-          <h3 class="card-title">Tech Arsenal</h3>
-          <div class="skills-wrapper">
-            <span class="skill-tag tag-blue" v-for="skill in techSkills" :key="skill">{{ skill }}</span>
-          </div>
         </div>
 
         <!-- Card 3: Project Management Stack (Spans 1 column) -->
@@ -87,10 +79,6 @@ const props = defineProps({
   story: {
     type: String,
     default: 'I am a hybrid professional who speaks both the language of code and the language of business. With a background in system analysis and frontend development (Vue/Nuxt), I transitioned into Project Management to ensure that beautiful code actually solves real-world problems. I build systems, manage timelines, and protect my team\'s focus.'
-  },
-  techSkills: {
-    type: Array,
-    default: () => ['Vue.js', 'Nuxt', 'REST APIs', 'SQL', 'Figma', 'System Design']
   },
   managementSkills: {
     type: Array,
