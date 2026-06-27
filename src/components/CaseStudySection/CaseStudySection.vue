@@ -8,7 +8,15 @@
           <span class="prefix-line"></span>
           <span class="prefix-text">{{ prefix }}</span>
         </div>
-        <h2 class="section-title">{{ title }}</h2>
+        <h2 class="section-title">
+          <div class="title-corners-wrap">
+            <DecryptedText :text="title" animate-on="inViewHover" />
+            <span class="title-corner corner-tl"></span>
+            <span class="title-corner corner-tr"></span>
+            <span class="title-corner corner-bl"></span>
+            <span class="title-corner corner-br"></span>
+          </div>
+        </h2>
         <p class="section-desc">{{ description }}</p>
       </div>
 
@@ -47,6 +55,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import DecryptedText from '../AboutSection/DecryptedText.vue';
 
 const props = defineProps({
   prefix: {
