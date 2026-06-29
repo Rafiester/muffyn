@@ -48,14 +48,25 @@ Vercel is the recommended hosting platform for Vite-based static and dynamic fro
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
 4. **Configure Environment Variables**:
+   You can configure your environment variables in Vercel in two ways:
+
+   ### Option A: Use Vercel's Official Supabase Integration (Recommended & Automatic)
+   1. In your Vercel Dashboard, go to your project's page and select the **Integrations** tab.
+   2. Search for **Supabase** and click **Add Integration**.
+   3. Choose your Vercel scope and connect it to your project.
+   4. Select your Supabase Organization and link it to your existing project (`iqlzfuoftervcvrgxzvx`).
+   5. Vercel will automatically populate all database connection URLs and API keys (`POSTGRES_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, etc.).
+   6. Because the codebase natively supports fallbacks for Vercel's default keys, this connection works instantly without any additional configuration!
+
+   ### Option B: Manual Environment Variable Setup
    Expand the **"Environment Variables"** dropdown and add the following keys:
 
    | Key | Value Example | Description |
    | :--- | :--- | :--- |
-   | **`DATABASE_URL`** | `postgresql://postgres.[ref]:[pass]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=3&pool_timeout=30` | Supabase **Transaction Pooler** URL (Port 6543) |
-   | **`DIRECT_URL`** | `postgresql://postgres.[ref]:[pass]@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres` | Supabase **Direct Connection** URL (Port 5432) |
-   | **`VITE_SUPABASE_URL`** | `https://[project-ref].supabase.co` | Supabase REST API URL |
-   | **`VITE_SUPABASE_ANON_KEY`** | `eyJhbGciOiJIUzI1...` | Supabase Anon Public Key |
+   | **`DATABASE_URL`** | `postgresql://postgres.iqlzfuoftervcvrgxzvx:[your-pass]@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=3&pool_timeout=30` | Supabase **Transaction Pooler** URL (Port 6543) |
+   | **`DIRECT_URL`** | `postgresql://postgres.iqlzfuoftervcvrgxzvx:[your-pass]@aws-1-ap-south-1.pooler.supabase.com:5432/postgres` | Supabase **Direct Connection** URL (Port 5432) |
+   | **`VITE_SUPABASE_URL`** (or `NEXT_PUBLIC_SUPABASE_URL`) | `https://iqlzfuoftervcvrgxzvx.supabase.co` | Supabase REST API URL |
+   | **`VITE_SUPABASE_ANON_KEY`** (or `NEXT_PUBLIC_SUPABASE_ANON_KEY`) | `eyJhbGciOiJIUzI1...` | Supabase Anon Public Key |
 
 5. Click **Deploy**.
 
