@@ -703,6 +703,43 @@
                 </div>
               </div>
 
+              <!-- Section 02: Navbar Menu Titles -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">02</span>
+                  <h4 class="section-title">Navbar Menu Titles</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="row-cell">
+                      <label for="nav-home" class="form-label">Home Link Title</label>
+                      <input type="text" id="nav-home" v-model="siteData.nav_home" class="form-input" required />
+                    </div>
+                    <div class="row-cell">
+                      <label for="nav-services" class="form-label">Services Link Title</label>
+                      <input type="text" id="nav-services" v-model="siteData.nav_services" class="form-input" required />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="row-cell">
+                      <label for="nav-portfolio" class="form-label">Portfolio Link Title</label>
+                      <input type="text" id="nav-portfolio" v-model="siteData.nav_portfolio" class="form-input" required />
+                    </div>
+                    <div class="row-cell">
+                      <label for="nav-experience" class="form-label">Experience Link Title</label>
+                      <input type="text" id="nav-experience" v-model="siteData.nav_experience" class="form-input" required />
+                    </div>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="nav-about" class="form-label">About Me Link Title</label>
+                    <input type="text" id="nav-about" v-model="siteData.nav_about" class="form-input" required />
+                  </div>
+                </div>
+              </div>
+
               <!-- Save Button -->
               <div class="form-actions-bar">
                 <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-seo">
@@ -761,6 +798,11 @@ import { localCms } from '../localCms';
 
 const siteData = ref({
   navbar_logo: '',
+  nav_home: '',
+  nav_services: '',
+  nav_portfolio: '',
+  nav_experience: '',
+  nav_about: '',
   hero_title: '',
   hero_description: '',
   portrait_url: '',

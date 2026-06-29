@@ -8,11 +8,11 @@
 
       <!-- Desktop Navigation Links -->
       <nav class="navbar-links">
-        <a href="#home" class="nav-link active">Home</a>
-        <a href="#services" class="nav-link">{{ uspPrefix }}</a>
-        <a href="#portfolio" class="nav-link">{{ portfolioPrefix }}</a>
-        <a href="#experience" class="nav-link">{{ experiencePrefix }}</a>
-        <a href="#about" class="nav-link">{{ aboutPrefix }}</a>
+        <a href="#home" class="nav-link active">{{ navHome }}</a>
+        <a href="#services" class="nav-link">{{ navServices }}</a>
+        <a href="#portfolio" class="nav-link">{{ navPortfolio }}</a>
+        <a href="#experience" class="nav-link">{{ navExperience }}</a>
+        <a href="#about" class="nav-link">{{ navAbout }}</a>
       </nav>
 
       <!-- CTA (Desktop) -->
@@ -37,11 +37,11 @@
     <!-- Mobile Navigation Menu -->
     <div class="mobile-nav" :class="{ 'is-open': isMenuOpen }" id="mobile-navigation-menu">
       <nav class="mobile-links">
-        <a href="#home" class="mobile-link" @click="closeMenu">Home</a>
-        <a href="#services" class="mobile-link" @click="closeMenu">{{ uspPrefix }}</a>
-        <a href="#portfolio" class="mobile-link" @click="closeMenu">{{ portfolioPrefix }}</a>
-        <a href="#experience" class="mobile-link" @click="closeMenu">{{ experiencePrefix }}</a>
-        <a href="#about" class="mobile-link" @click="closeMenu">{{ aboutPrefix }}</a>
+        <a href="#home" class="mobile-link" @click="closeMenu">{{ navHome }}</a>
+        <a href="#services" class="mobile-link" @click="closeMenu">{{ navServices }}</a>
+        <a href="#portfolio" class="mobile-link" @click="closeMenu">{{ navPortfolio }}</a>
+        <a href="#experience" class="mobile-link" @click="closeMenu">{{ navExperience }}</a>
+        <a href="#about" class="mobile-link" @click="closeMenu">{{ navAbout }}</a>
         <a href="https://wa.me/6281336191660" target="_blank" rel="noopener noreferrer" class="btn-pill mobile-contact-btn" @click="closeMenu">Get In Touch</a>
       </nav>
     </div>
@@ -56,19 +56,23 @@ const props = defineProps({
     type: String,
     default: 'RAFI'
   },
-  uspPrefix: {
+  navHome: {
+    type: String,
+    default: 'Home'
+  },
+  navServices: {
     type: String,
     default: 'Services'
   },
-  portfolioPrefix: {
+  navPortfolio: {
     type: String,
     default: 'Portfolio'
   },
-  experiencePrefix: {
+  navExperience: {
     type: String,
     default: 'Experience'
   },
-  aboutPrefix: {
+  navAbout: {
     type: String,
     default: 'About me'
   }

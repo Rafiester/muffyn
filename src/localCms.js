@@ -6,6 +6,11 @@ const AUTH_TOKEN_KEY = 'portfolio_admin_token';
 // Default initial data
 const DEFAULT_SITE_DATA = {
   navbar_logo: 'RAFI',
+  nav_home: 'Home',
+  nav_services: 'Services',
+  nav_portfolio: 'Portfolio',
+  nav_experience: 'Experience',
+  nav_about: 'About me',
   hero_title: 'IT PROJECT\nMANAGER &\nSYSTEM ANALYST',
   hero_description: 'Crafting precise digital products with Vue.js, Nuxt, and the modern web stack.',
   portrait_url: '/avatar.png',
@@ -126,6 +131,26 @@ export const localCms = {
     }
 
     let needsSave = false;
+    if (!siteDataObj.nav_home) {
+      siteDataObj.nav_home = DEFAULT_SITE_DATA.nav_home;
+      needsSave = true;
+    }
+    if (!siteDataObj.nav_services) {
+      siteDataObj.nav_services = DEFAULT_SITE_DATA.nav_services;
+      needsSave = true;
+    }
+    if (!siteDataObj.nav_portfolio) {
+      siteDataObj.nav_portfolio = DEFAULT_SITE_DATA.nav_portfolio;
+      needsSave = true;
+    }
+    if (!siteDataObj.nav_experience) {
+      siteDataObj.nav_experience = DEFAULT_SITE_DATA.nav_experience;
+      needsSave = true;
+    }
+    if (!siteDataObj.nav_about) {
+      siteDataObj.nav_about = DEFAULT_SITE_DATA.nav_about;
+      needsSave = true;
+    }
     if (!siteDataObj.usp_prefix) {
       siteDataObj.usp_prefix = DEFAULT_SITE_DATA.usp_prefix;
       needsSave = true;
