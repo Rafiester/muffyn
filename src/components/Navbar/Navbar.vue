@@ -9,10 +9,10 @@
       <!-- Desktop Navigation Links -->
       <nav class="navbar-links">
         <a href="#home" class="nav-link active">Home</a>
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#portfolio" class="nav-link">Portfolio</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#about" class="nav-link">About me</a>
+        <a href="#services" class="nav-link">{{ uspPrefix }}</a>
+        <a href="#portfolio" class="nav-link">{{ portfolioPrefix }}</a>
+        <a href="#experience" class="nav-link">{{ experiencePrefix }}</a>
+        <a href="#about" class="nav-link">{{ aboutPrefix }}</a>
       </nav>
 
       <!-- CTA (Desktop) -->
@@ -38,10 +38,10 @@
     <div class="mobile-nav" :class="{ 'is-open': isMenuOpen }" id="mobile-navigation-menu">
       <nav class="mobile-links">
         <a href="#home" class="mobile-link" @click="closeMenu">Home</a>
-        <a href="#services" class="mobile-link" @click="closeMenu">Services</a>
-        <a href="#portfolio" class="mobile-link" @click="closeMenu">Portfolio</a>
-        <a href="#experience" class="mobile-link" @click="closeMenu">Experience</a>
-        <a href="#about" class="mobile-link" @click="closeMenu">About me</a>
+        <a href="#services" class="mobile-link" @click="closeMenu">{{ uspPrefix }}</a>
+        <a href="#portfolio" class="mobile-link" @click="closeMenu">{{ portfolioPrefix }}</a>
+        <a href="#experience" class="mobile-link" @click="closeMenu">{{ experiencePrefix }}</a>
+        <a href="#about" class="mobile-link" @click="closeMenu">{{ aboutPrefix }}</a>
         <a href="https://wa.me/6281336191660" target="_blank" rel="noopener noreferrer" class="btn-pill mobile-contact-btn" @click="closeMenu">Get In Touch</a>
       </nav>
     </div>
@@ -55,6 +55,22 @@ const props = defineProps({
   logo: {
     type: String,
     default: 'RAFI'
+  },
+  uspPrefix: {
+    type: String,
+    default: 'Services'
+  },
+  portfolioPrefix: {
+    type: String,
+    default: 'Portfolio'
+  },
+  experiencePrefix: {
+    type: String,
+    default: 'Experience'
+  },
+  aboutPrefix: {
+    type: String,
+    default: 'About me'
   }
 });
 

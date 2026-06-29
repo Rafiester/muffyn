@@ -52,7 +52,13 @@ onMounted(() => {
 
 <template>
   <div class="app-layout">
-    <Navbar :logo="siteData.navbar_logo" />
+    <Navbar 
+      :logo="siteData.navbar_logo" 
+      :uspPrefix="siteData.usp_prefix"
+      :portfolioPrefix="siteData.case_studies_prefix"
+      :experiencePrefix="siteData.career_prefix"
+      :aboutPrefix="siteData.about_prefix"
+    />
     <main>
       <HeroSection 
         :prefix="siteData.hero_prefix"
