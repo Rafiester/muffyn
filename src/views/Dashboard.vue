@@ -703,11 +703,11 @@
                 </div>
               </div>
 
-              <!-- Section 02: Navbar Menu Titles -->
+              <!-- Section 02: Navbar Menu Titles & CTA -->
               <div class="form-section">
                 <div class="section-title-bar">
                   <span class="section-badge">02</span>
-                  <h4 class="section-title">Navbar Menu Titles</h4>
+                  <h4 class="section-title">Navbar Link Titles & CTA Button Settings</h4>
                 </div>
                 
                 <div class="form-grid">
@@ -733,9 +733,20 @@
                     </div>
                   </div>
 
+                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="row-cell">
+                      <label for="nav-about" class="form-label">About Me Link Title</label>
+                      <input type="text" id="nav-about" v-model="siteData.nav_about" class="form-input" required />
+                    </div>
+                    <div class="row-cell">
+                      <label for="nav-cta-text" class="form-label">CTA Button Label</label>
+                      <input type="text" id="nav-cta-text" v-model="siteData.nav_cta_text" class="form-input" required />
+                    </div>
+                  </div>
+
                   <div class="form-group col-span-2">
-                    <label for="nav-about" class="form-label">About Me Link Title</label>
-                    <input type="text" id="nav-about" v-model="siteData.nav_about" class="form-input" required />
+                    <label for="nav-cta-url" class="form-label">CTA Button Destination URL</label>
+                    <input type="text" id="nav-cta-url" v-model="siteData.nav_cta_url" class="form-input" required />
                   </div>
                 </div>
               </div>
@@ -803,6 +814,8 @@ const siteData = ref({
   nav_portfolio: '',
   nav_experience: '',
   nav_about: '',
+  nav_cta_text: '',
+  nav_cta_url: '',
   hero_title: '',
   hero_description: '',
   portrait_url: '',

@@ -17,7 +17,7 @@
 
       <!-- CTA (Desktop) -->
       <div class="navbar-actions">
-        <a href="https://wa.me/6281336191660" target="_blank" rel="noopener noreferrer" class="btn-pill">Get In Touch</a>
+        <a :href="ctaUrl" target="_blank" rel="noopener noreferrer" class="btn-pill">{{ ctaText }}</a>
       </div>
 
       <!-- Hamburger Menu Button -->
@@ -42,7 +42,7 @@
         <a href="#portfolio" class="mobile-link" @click="closeMenu">{{ navPortfolio }}</a>
         <a href="#experience" class="mobile-link" @click="closeMenu">{{ navExperience }}</a>
         <a href="#about" class="mobile-link" @click="closeMenu">{{ navAbout }}</a>
-        <a href="https://wa.me/6281336191660" target="_blank" rel="noopener noreferrer" class="btn-pill mobile-contact-btn" @click="closeMenu">Get In Touch</a>
+        <a :href="ctaUrl" target="_blank" rel="noopener noreferrer" class="btn-pill mobile-contact-btn" @click="closeMenu">{{ ctaText }}</a>
       </nav>
     </div>
   </header>
@@ -75,6 +75,14 @@ const props = defineProps({
   navAbout: {
     type: String,
     default: 'About me'
+  },
+  ctaText: {
+    type: String,
+    default: 'Get In Touch'
+  },
+  ctaUrl: {
+    type: String,
+    default: 'https://wa.me/6281336191660'
   }
 });
 

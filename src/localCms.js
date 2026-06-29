@@ -11,6 +11,8 @@ const DEFAULT_SITE_DATA = {
   nav_portfolio: 'Portfolio',
   nav_experience: 'Experience',
   nav_about: 'About me',
+  nav_cta_text: 'Get In Touch',
+  nav_cta_url: 'https://wa.me/6281336191660',
   hero_title: 'IT PROJECT\nMANAGER &\nSYSTEM ANALYST',
   hero_description: 'Crafting precise digital products with Vue.js, Nuxt, and the modern web stack.',
   portrait_url: '/avatar.png',
@@ -149,6 +151,14 @@ export const localCms = {
     }
     if (!siteDataObj.nav_about) {
       siteDataObj.nav_about = DEFAULT_SITE_DATA.nav_about;
+      needsSave = true;
+    }
+    if (!siteDataObj.nav_cta_text) {
+      siteDataObj.nav_cta_text = DEFAULT_SITE_DATA.nav_cta_text;
+      needsSave = true;
+    }
+    if (!siteDataObj.nav_cta_url) {
+      siteDataObj.nav_cta_url = DEFAULT_SITE_DATA.nav_cta_url;
       needsSave = true;
     }
     if (!siteDataObj.usp_prefix) {

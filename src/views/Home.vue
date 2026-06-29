@@ -59,6 +59,8 @@ onMounted(() => {
       :navPortfolio="siteData.nav_portfolio"
       :navExperience="siteData.nav_experience"
       :navAbout="siteData.nav_about"
+      :ctaText="siteData.nav_cta_text"
+      :ctaUrl="siteData.nav_cta_url"
     />
     <main>
       <HeroSection 
