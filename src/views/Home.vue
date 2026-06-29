@@ -42,6 +42,22 @@ onMounted(() => {
       }
       metaDesc.setAttribute('content', siteData.value.meta_description);
     }
+
+    // Sync from Supabase database in the background
+    localCms.syncFromSupabase((synced) => {
+      siteData.value = synced.siteData;
+      socialLinks.value = synced.socialLinks;
+      clientLogos.value = synced.clientLogos;
+      if (synced.siteData.meta_title) {
+        document.title = synced.siteData.meta_title;
+      }
+      if (synced.siteData.meta_description) {
+        let metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content', synced.siteData.meta_description);
+        }
+      }
+    });
   } catch (error) {
     console.error('Error loading portfolio data from Local Storage:', error);
   } finally {

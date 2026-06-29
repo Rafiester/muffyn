@@ -1274,6 +1274,13 @@ onMounted(() => {
   socialLinks.value = data.socialLinks;
   clientLogos.value = data.clientLogos;
   window.addEventListener('click', closeUserMenu);
+
+  // Sync from Supabase database in the background
+  localCms.syncFromSupabase((synced) => {
+    siteData.value = synced.siteData;
+    socialLinks.value = synced.socialLinks;
+    clientLogos.value = synced.clientLogos;
+  });
 });
 
 onUnmounted(() => {

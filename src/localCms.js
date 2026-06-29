@@ -1,3 +1,5 @@
+import { supabase } from './supabase.js';
+
 const SITE_DATA_KEY = 'portfolio_site_data';
 const SOCIAL_LINKS_KEY = 'portfolio_social_links';
 const CLIENT_LOGOS_KEY = 'portfolio_client_logos';
@@ -300,7 +302,7 @@ export const localCms = {
     };
   },
 
-  saveData(data) {
+  async saveData(data) {
     if (data.siteData) {
       localStorage.setItem(SITE_DATA_KEY, JSON.stringify(data.siteData));
       if (data.siteData.theme_accent) {
@@ -312,6 +314,58 @@ export const localCms = {
     }
     if (data.clientLogos) {
       localStorage.setItem(CLIENT_LOGOS_KEY, JSON.stringify(data.clientLogos));
+    }
+
+    if (supabase && data.siteData) {
+      try {
+        await supabase
+          .from('portfolio_config')
+          .update({
+            site_data: data.siteData,
+            social_links: data.socialLinks || [],
+            client_logos: data.clientLogos || [],
+            updated_at: new Date()
+          })
+          .eq('id', 1);
+      } catch (err) {
+        console.error('Supabase write error:', err);
+      }
+    }
+  },
+
+  async syncFromSupabase(callback) {
+    if (!supabase) return;
+    try {
+      const { data, error } = await supabase
+        .from('portfolio_config')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+      if (error) {
+        console.error('Error syncing from Supabase:', error);
+        return;
+      }
+
+      if (data) {
+        localStorage.setItem(SITE_DATA_KEY, JSON.stringify(data.site_data));
+        localStorage.setItem(SOCIAL_LINKS_KEY, JSON.stringify(data.social_links));
+        localStorage.setItem(CLIENT_LOGOS_KEY, JSON.stringify(data.client_logos));
+        
+        if (data.site_data && data.site_data.theme_accent) {
+          applyThemeColor(data.site_data.theme_accent);
+        }
+
+        if (callback) {
+          callback({
+            siteData: data.site_data,
+            socialLinks: data.social_links,
+            clientLogos: data.client_logos
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Failed to sync from Supabase:', err);
     }
   },
 
