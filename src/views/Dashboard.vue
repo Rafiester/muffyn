@@ -372,8 +372,34 @@
                     </div>
 
                     <div class="row-cell">
-                      <label class="form-label" style="font-size: 0.72rem;">Tags (comma separated, e.g. Figma, UI/UX, Design)</label>
-                      <input type="text" v-model="service.tags" class="form-input" placeholder="Tag 1, Tag 2, Tag 3" />
+                      <label class="form-label" style="font-size: 0.72rem;">Tags (Press Enter to add)</label>
+                      <div class="tags-input-container" style="display: flex; flex-direction: column; gap: 8px;">
+                        <!-- Display added tags -->
+                        <div class="tags-wrapper" style="display: flex; flex-wrap: wrap; gap: 6px;">
+                          <span 
+                            v-for="(tag, tagIdx) in (service.tags ? service.tags.split(',').map(t => t.trim()).filter(Boolean) : [])" 
+                            :key="tagIdx"
+                            class="tag-pill"
+                            style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background-color: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 40px; font-size: 0.75rem; color: var(--text-primary);"
+                          >
+                            <span>{{ tag }}</span>
+                            <button 
+                              type="button" 
+                              @click="removeTag(service, tag)" 
+                              style="background: transparent; border: none; padding: 0; color: #ff5252; cursor: pointer; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; line-height: 1;"
+                            >
+                              &times;
+                            </button>
+                          </span>
+                        </div>
+                        <!-- Input to add new tag -->
+                        <input 
+                          type="text" 
+                          placeholder="Type tag and press Enter" 
+                          class="form-input" 
+                          @keydown.prevent.enter="addTag(service, $event)"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1061,6 +1087,25 @@ const showNotification = (text, type = 'success') => {
   setTimeout(() => {
     notification.value = null;
   }, 4000);
+};
+
+const addTag = (service, event) => {
+  const input = event.target;
+  const val = input.value.trim();
+  if (val) {
+    let currentTags = service.tags ? service.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+    if (!currentTags.includes(val)) {
+      currentTags.push(val);
+      service.tags = currentTags.join(', ');
+    }
+    input.value = '';
+  }
+};
+
+const removeTag = (service, tagToRemove) => {
+  let currentTags = service.tags ? service.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  currentTags = currentTags.filter(t => t !== tagToRemove);
+  service.tags = currentTags.join(', ');
 };
 
 const handleSave = () => {
