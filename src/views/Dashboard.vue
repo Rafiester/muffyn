@@ -57,7 +57,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">{{ siteData.nav_home }} Section</span>
+          <span class="nav-label">{{ siteData.nav_home }}</span>
         </button>
         <button 
           class="nav-item" 
@@ -68,7 +68,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2zm0 8H7v-2h10v2z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">{{ siteData.nav_services }} Section</span>
+          <span class="nav-label">{{ siteData.nav_services }}</span>
         </button>
         <button 
           class="nav-item" 
