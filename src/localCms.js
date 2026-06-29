@@ -3,6 +3,35 @@ const SOCIAL_LINKS_KEY = 'portfolio_social_links';
 const CLIENT_LOGOS_KEY = 'portfolio_client_logos';
 const AUTH_TOKEN_KEY = 'portfolio_admin_token';
 
+// Color utilities for dynamic theme configuration
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+function darkenColor(hex, percent) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return hex;
+  const r = Math.max(0, Math.floor(rgb.r * (1 - percent)));
+  const g = Math.max(0, Math.floor(rgb.g * (1 - percent)));
+  const b = Math.max(0, Math.floor(rgb.b * (1 - percent)));
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+export function applyThemeColor(hexColor) {
+  if (!hexColor) return;
+  const rgb = hexToRgb(hexColor);
+  if (rgb) {
+    document.documentElement.style.setProperty('--accent', hexColor);
+    document.documentElement.style.setProperty('--accent-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
+    document.documentElement.style.setProperty('--accent-hover', darkenColor(hexColor, 0.12));
+  }
+}
+
 // Default initial data
 const DEFAULT_SITE_DATA = {
   navbar_logo: 'RAFI',
@@ -13,6 +42,7 @@ const DEFAULT_SITE_DATA = {
   nav_about: 'About me',
   nav_cta_text: 'Get In Touch',
   nav_cta_url: 'https://wa.me/6281336191660',
+  theme_accent: '#bd3636',
   hero_title: 'IT PROJECT\nMANAGER &\nSYSTEM ANALYST',
   hero_description: 'Crafting precise digital products with Vue.js, Nuxt, and the modern web stack.',
   portrait_url: '/avatar.png',
@@ -221,6 +251,10 @@ export const localCms = {
       siteDataObj.about_stat_scope = DEFAULT_SITE_DATA.about_stat_scope;
       needsSave = true;
     }
+    if (!siteDataObj.theme_accent) {
+      siteDataObj.theme_accent = DEFAULT_SITE_DATA.theme_accent;
+      needsSave = true;
+    }
     if (siteDataObj.usp_services) {
       siteDataObj.usp_services = siteDataObj.usp_services.map((service, idx) => {
         const defaultService = DEFAULT_SITE_DATA.usp_services[idx] || {};
@@ -257,6 +291,8 @@ export const localCms = {
       return link;
     });
 
+    applyThemeColor(siteDataObj.theme_accent);
+
     return {
       siteData: siteDataObj,
       socialLinks: socialLinksList,
@@ -267,6 +303,9 @@ export const localCms = {
   saveData(data) {
     if (data.siteData) {
       localStorage.setItem(SITE_DATA_KEY, JSON.stringify(data.siteData));
+      if (data.siteData.theme_accent) {
+        applyThemeColor(data.siteData.theme_accent);
+      }
     }
     if (data.socialLinks) {
       localStorage.setItem(SOCIAL_LINKS_KEY, JSON.stringify(data.socialLinks));

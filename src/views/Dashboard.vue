@@ -772,6 +772,50 @@
                 </div>
               </div>
 
+              <!-- Section 03: Theme Customization -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">03</span>
+                  <h4 class="section-title">Theme Customization</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="theme-accent" class="form-label">Theme Accent Color</label>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 6px;">
+                      <!-- Color Picker (Input type color) -->
+                      <input 
+                        type="color" 
+                        id="theme-accent-picker" 
+                        v-model="siteData.theme_accent" 
+                        style="width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; cursor: pointer; background: transparent;"
+                      />
+                      <!-- Hex text input -->
+                      <input 
+                        type="text" 
+                        id="theme-accent" 
+                        v-model="siteData.theme_accent" 
+                        class="form-input" 
+                        style="flex-grow: 1; max-width: 150px; font-family: monospace; text-transform: uppercase;"
+                        placeholder="#BD3636"
+                        required 
+                      />
+                      <!-- Live Preview Badge -->
+                      <div 
+                        style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 4px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);"
+                      >
+                        <span 
+                          style="width: 12px; height: 12px; border-radius: 50%; display: inline-block;" 
+                          :style="{ backgroundColor: siteData.theme_accent }"
+                        ></span>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">Live Accent Preview</span>
+                      </div>
+                    </div>
+                    <span class="hint-text">Choose a color from the palette picker or input a hex color code. The change will apply instantly.</span>
+                  </div>
+                </div>
+              </div>
+
               <!-- Save Button -->
               <div class="form-actions-bar">
                 <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-seo">
@@ -824,9 +868,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { localCms } from '../localCms';
+import { localCms, applyThemeColor } from '../localCms';
 
 const siteData = ref({
   navbar_logo: '',
@@ -868,7 +912,8 @@ const siteData = ref({
   career_prefix: '',
   career_title: '',
   career_subtitle: '',
-  career_items: []
+  career_items: [],
+  theme_accent: ''
 });
 
 const techSkillsText = computed({
@@ -879,6 +924,13 @@ const techSkillsText = computed({
 const managementSkillsText = computed({
   get: () => (siteData.value.about_management_skills || []).join(', '),
   set: (val) => { siteData.value.about_management_skills = val.split(',').map(s => s.trim()).filter(Boolean); }
+});
+
+// Watch accent color changes to apply live preview in dashboard
+watch(() => siteData.value.theme_accent, (newColor) => {
+  if (newColor && /^#[0-9A-F]{6}$/i.test(newColor)) {
+    applyThemeColor(newColor);
+  }
 });
 
 const handleClientLogoUpload = (event, idx) => {
