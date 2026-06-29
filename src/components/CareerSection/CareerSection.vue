@@ -1,20 +1,5 @@
 <template>
   <section class="career-section" id="experience">
-    <!-- Background SideRays effect -->
-    <SideRays
-      :speed="2.5"
-      ray-color1="#bd3636"
-      ray-color2="#c46464"
-      :intensity="2"
-      :spread="2"
-      origin="bottom-right"
-      :tilt="0"
-      :saturation="1.5"
-      :blend="0.75"
-      :falloff="1.6"
-      :opacity="0.8"
-    />
-
     <div class="career-container">
       <!-- Section Header -->
       <div class="career-header">
@@ -61,7 +46,6 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import SideRays from '../AboutSection/SideRays.vue';
 
 const props = defineProps({
   prefix: {

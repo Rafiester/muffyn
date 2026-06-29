@@ -10,7 +10,7 @@
         </div>
         <h2 class="section-title">
           <div class="title-corners-wrap">
-            <DecryptedText :text="title" animate-on="inViewHover" />
+            {{ title }}
             <span class="title-corner corner-tl"></span>
             <span class="title-corner corner-tr"></span>
             <span class="title-corner corner-bl"></span>
@@ -54,18 +54,57 @@
             <h3 class="card-title-text">{{ card.title }}</h3>
             <p class="card-desc-text">{{ card.desc }}</p>
             <div class="card-action">
-              <button class="btn-see-more">{{ card.button_text || 'See More' }}</button>
+              <button class="btn-see-more" @click="openPopup(card, index)">{{ card.button_text || 'See More' }}</button>
             </div>
           </div>
         </ElectricBorder>
       </div>
     </div>
+
+    <!-- Simple Fluent Design Modal -->
+    <Transition name="fluent-fade">
+      <div v-if="isOpen" class="fluent-modal-overlay" @click.self="closePopup">
+        <div class="fluent-modal-window simple-modal">
+          <!-- Modal Body -->
+          <div class="fluent-modal-body">
+            <div class="fluent-content">
+              <div class="fluent-title-row">
+                <h3 class="fluent-detail-title">{{ selectedCard?.title }}</h3>
+                <button class="fluent-close-btn-body" @click="closePopup">&times;</button>
+              </div>
+              
+              <div class="fluent-image-preview">
+                <img v-if="selectedCard?.icon_data" :src="selectedCard.icon_data" alt="Portfolio Image" class="fluent-preview-img" />
+                
+                <!-- UI/UX Ruler & Pencil Icon -->
+                <svg v-else-if="selectedCard?.icon_type === 'design' || (!selectedCard?.icon_type && selectedIndex === 0)" class="service-icon popup-service-icon" viewBox="0 0 24 24" width="48" height="48">
+                  <path d="M14.7 5.7l-1.4-1.4c-.4-.4-1-.4-1.4 0L3.5 12.7c-.4.4-.4 1 0 1.4l1.4 1.4c.4.4 1 .4 1.4 0L14.7 7.1c.4-.4.4-1 0-1.4zm-9.1 7.7l-.7-.7.7-.7.7.7-.7.7zm15.1-6.1l-2.1-2.1c-.4-.4-1-.4-1.4 0L15.8 6.6c-.4.4-.4 1 0 1.4l2.1 2.1c.4.4 1 .4 1.4 0l1.4-1.4c.4-.4.4-1 0-1.4z" fill="currentColor"/>
+                  <path d="M4 20h3l11-11-3-3L4 17v3z" fill="currentColor"/>
+                </svg>
+                
+                <!-- Web Design Browser Icon -->
+                <svg v-else-if="selectedCard?.icon_type === 'web' || (!selectedCard?.icon_type && selectedIndex === 1)" class="service-icon popup-service-icon" viewBox="0 0 24 24" width="48" height="48">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z" fill="currentColor"/>
+                </svg>
+                
+                <!-- Mobile App Screen Icon -->
+                <svg v-else class="service-icon popup-service-icon" viewBox="0 0 24 24" width="48" height="48">
+                  <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" fill="currentColor"/>
+                  <path d="M16 8l-1.41-1.41L11.17 10l3.42 3.41L16 12l-2-2zM8 12l2 2 1.41-1.41L8 9.17 9.41 7.76 8 6.35z" fill="currentColor"/>
+                </svg>
+              </div>
+
+              <p class="fluent-desc">{{ selectedCard?.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </section>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import DecryptedText from '../AboutSection/DecryptedText.vue';
+import { ref, computed } from 'vue';
 import ElectricBorder from './ElectricBorder.vue';
 
 const props = defineProps({
@@ -86,6 +125,23 @@ const props = defineProps({
     default: () => []
   }
 });
+
+const isOpen = ref(false);
+const selectedCard = ref(null);
+const selectedIndex = ref(null);
+
+const openPopup = (card, index) => {
+  selectedCard.value = card;
+  selectedIndex.value = index;
+  isOpen.value = true;
+  document.body.style.overflow = 'hidden';
+};
+
+const closePopup = () => {
+  isOpen.value = false;
+  selectedIndex.value = null;
+  document.body.style.overflow = '';
+};
 
 // Fallback to initial defaults if no CMS data exists
 const defaultCards = [
