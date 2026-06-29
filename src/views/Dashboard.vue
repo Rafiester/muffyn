@@ -198,11 +198,6 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="navbar-logo" class="form-label">Navbar Logo Text</label>
-                    <input type="text" id="navbar-logo" v-model="siteData.navbar_logo" class="form-input" required />
-                  </div>
-
-                  <div class="form-group col-span-2">
                     <label for="hero-prefix" class="form-label">Hero Prefix Text</label>
                     <input type="text" id="hero-prefix" v-model="siteData.hero_prefix" class="form-input" required />
                     <span class="hint-text">Appears above the hero title (e.g. "RAFIESTER").</span>
@@ -711,6 +706,11 @@
                 </div>
                 
                 <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="navbar-logo" class="form-label">Navbar Logo Text</label>
+                    <input type="text" id="navbar-logo" v-model="siteData.navbar_logo" class="form-input" required />
+                  </div>
+
                   <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="row-cell">
                       <label for="nav-home" class="form-label">Home Link Title</label>
