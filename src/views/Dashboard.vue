@@ -198,19 +198,19 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="hero-prefix" class="form-label">Hero Prefix Text</label>
+                    <label for="hero-prefix" class="form-label">{{ siteData.nav_home || 'Hero' }} Prefix Text</label>
                     <input type="text" id="hero-prefix" v-model="siteData.hero_prefix" class="form-input" required />
                     <span class="hint-text">Appears above the hero title (e.g. "RAFIESTER").</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="hero-title" class="form-label">Hero Title Text</label>
+                    <label for="hero-title" class="form-label">{{ siteData.nav_home || 'Hero' }} Title Text</label>
                     <textarea id="hero-title" v-model="siteData.hero_title" class="form-input text-area" rows="3" required></textarea>
                     <span class="hint-text">Press Enter to structure your title (maximum 3 lines allowed).</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="hero-description" class="form-label">Hero Description</label>
+                    <label for="hero-description" class="form-label">{{ siteData.nav_home || 'Hero' }} Description</label>
                     <textarea id="hero-description" v-model="siteData.hero_description" class="form-input text-area" rows="3" required></textarea>
                   </div>
 
@@ -325,19 +325,19 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="usp-prefix" class="form-label">USP Prefix Text</label>
+                    <label for="usp-prefix" class="form-label">{{ siteData.nav_services || 'USP' }} Prefix Text</label>
                     <input type="text" id="usp-prefix" v-model="siteData.usp_prefix" class="form-input" required />
                     <span class="hint-text">Appears above the USP title (e.g. "SERVICES").</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="usp-title" class="form-label">USP Title Text</label>
+                    <label for="usp-title" class="form-label">{{ siteData.nav_services || 'USP' }} Title Text</label>
                     <input type="text" id="usp-title" v-model="siteData.usp_title" class="form-input" required />
                     <span class="hint-text">Highlighted terms: "Your Needs" or "needs" will be automatically highlighted in yellow.</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="usp-description" class="form-label">USP Description Text</label>
+                    <label for="usp-description" class="form-label">{{ siteData.nav_services || 'USP' }} Description Text</label>
                     <textarea id="usp-description" v-model="siteData.usp_description" class="form-input text-area" rows="3" required></textarea>
                   </div>
                 </div>
@@ -427,16 +427,16 @@
                 </div>
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="case-studies-prefix" class="form-label">Section Prefix</label>
+                    <label for="case-studies-prefix" class="form-label">{{ siteData.nav_portfolio || 'Portfolio' }} Prefix</label>
                     <input type="text" id="case-studies-prefix" v-model="siteData.case_studies_prefix" class="form-input" required />
                     <span class="hint-text">Appears above the case studies title (e.g. "PORTFOLIO").</span>
                   </div>
                   <div class="form-group col-span-2">
-                    <label for="case-studies-title" class="form-label">Section Title</label>
+                    <label for="case-studies-title" class="form-label">{{ siteData.nav_portfolio || 'Portfolio' }} Title</label>
                     <input type="text" id="case-studies-title" v-model="siteData.case_studies_title" class="form-input" required />
                   </div>
                   <div class="form-group col-span-2">
-                    <label for="case-studies-description" class="form-label">Section Description</label>
+                    <label for="case-studies-description" class="form-label">{{ siteData.nav_portfolio || 'Portfolio' }} Description</label>
                     <textarea id="case-studies-description" v-model="siteData.case_studies_description" class="form-input text-area" rows="2" required></textarea>
                   </div>
                 </div>
@@ -531,18 +531,19 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="career-prefix" class="form-label">Section Prefix</label>
+                    <label for="career-prefix" class="form-label">{{ siteData.nav_experience || 'Experience' }} Prefix</label>
                     <input type="text" id="career-prefix" v-model="siteData.career_prefix" class="form-input" required />
+                    <span class="hint-text">Appears above the professional journey title (e.g. "EXPERIENCE").</span>
                   </div>
                   
                   <div class="form-group col-span-2">
-                    <label for="career-title" class="form-label">Section Title</label>
+                    <label for="career-title" class="form-label">{{ siteData.nav_experience || 'Experience' }} Title</label>
                     <input type="text" id="career-title" v-model="siteData.career_title" class="form-input" required />
                     <span class="hint-text">Highlighted terms: "Journey" or "journey" will automatically be highlighted in yellow.</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="career-subtitle" class="form-label">Section Subtitle</label>
+                    <label for="career-subtitle" class="form-label">{{ siteData.nav_experience || 'Experience' }} Subtitle</label>
                     <input type="text" id="career-subtitle" v-model="siteData.career_subtitle" class="form-input" required />
                   </div>
                 </div>
@@ -616,19 +617,19 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
-                    <label for="about-prefix" class="form-label">Section Prefix</label>
+                    <label for="about-prefix" class="form-label">{{ siteData.nav_about || 'About' }} Prefix</label>
                     <input type="text" id="about-prefix" v-model="siteData.about_prefix" class="form-input" required />
                     <span class="hint-text">Appears above the section title (e.g. "WHO AM I").</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="about-title" class="form-label">Section Title</label>
+                    <label for="about-title" class="form-label">{{ siteData.nav_about || 'About' }} Title</label>
                     <input type="text" id="about-title" v-model="siteData.about_title" class="form-input" required />
                     <span class="hint-text">Highlighted terms: "Business" or "Technical" will automatically be highlighted in red accent.</span>
                   </div>
 
                   <div class="form-group col-span-2">
-                    <label for="about-description" class="form-label">Section Description</label>
+                    <label for="about-description" class="form-label">{{ siteData.nav_about || 'About' }} Description</label>
                     <textarea id="about-description" v-model="siteData.about_description" class="form-input text-area" rows="2" required></textarea>
                   </div>
 
@@ -733,29 +734,29 @@
 
                   <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="row-cell">
-                      <label for="nav-home" class="form-label">Home Link Title</label>
+                      <label for="nav-home" class="form-label">{{ siteData.nav_home || 'Home' }} Link Title</label>
                       <input type="text" id="nav-home" v-model="siteData.nav_home" class="form-input" required />
                     </div>
                     <div class="row-cell">
-                      <label for="nav-services" class="form-label">Services Link Title</label>
+                      <label for="nav-services" class="form-label">{{ siteData.nav_services || 'Services' }} Link Title</label>
                       <input type="text" id="nav-services" v-model="siteData.nav_services" class="form-input" required />
                     </div>
                   </div>
                   
                   <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="row-cell">
-                      <label for="nav-portfolio" class="form-label">Portfolio Link Title</label>
+                      <label for="nav-portfolio" class="form-label">{{ siteData.nav_portfolio || 'Portfolio' }} Link Title</label>
                       <input type="text" id="nav-portfolio" v-model="siteData.nav_portfolio" class="form-input" required />
                     </div>
                     <div class="row-cell">
-                      <label for="nav-experience" class="form-label">Experience Link Title</label>
+                      <label for="nav-experience" class="form-label">{{ siteData.nav_experience || 'Experience' }} Link Title</label>
                       <input type="text" id="nav-experience" v-model="siteData.nav_experience" class="form-input" required />
                     </div>
                   </div>
 
                   <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="row-cell">
-                      <label for="nav-about" class="form-label">About Me Link Title</label>
+                      <label for="nav-about" class="form-label">{{ siteData.nav_about || 'About me' }} Link Title</label>
                       <input type="text" id="nav-about" v-model="siteData.nav_about" class="form-input" required />
                     </div>
                     <div class="row-cell">
