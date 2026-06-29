@@ -57,7 +57,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">Hero Section</span>
+          <span class="nav-label">{{ siteData.nav_home }} Section</span>
         </button>
         <button 
           class="nav-item" 
@@ -68,7 +68,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2zm0 8H7v-2h10v2z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">USP Section</span>
+          <span class="nav-label">{{ siteData.nav_services }} Section</span>
         </button>
         <button 
           class="nav-item" 
@@ -79,7 +79,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">Case Studies</span>
+          <span class="nav-label">{{ siteData.nav_portfolio }}</span>
         </button>
         <button 
           class="nav-item" 
@@ -90,7 +90,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM12 2C6.48 2 2 6.48 2 12h2c0-4.41 3.59-8 8-8s8 3.59 8 8h2c0-5.52-4.48-10-10-10z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">Professional Journey</span>
+          <span class="nav-label">{{ siteData.nav_experience }}</span>
         </button>
         <button 
           class="nav-item" 
@@ -101,7 +101,7 @@
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
           </svg>
-          <span class="nav-label">About Me</span>
+          <span class="nav-label">{{ siteData.nav_about }}</span>
         </button>
 
         <div class="nav-divider"></div>
@@ -184,7 +184,7 @@
           <!-- Section: Hero (Dashboard Form) -->
           <div v-if="activeSection === 'hero'" class="workspace-card animated-fade-in" id="hero-section-card">
             <div class="card-header">
-              <h3 class="card-title">Manage Hero Section Identity</h3>
+              <h3 class="card-title">Manage {{ siteData.nav_home }} Section Identity</h3>
               <p class="card-subtitle">Edit the text settings, social items, and client brand logos.</p>
             </div>
             
@@ -311,8 +311,8 @@
           <!-- Section: USP (Dashboard Form) -->
           <div v-if="activeSection === 'usp'" class="workspace-card animated-fade-in" id="usp-section-card">
             <div class="card-header">
-              <h3 class="card-title">Manage USP Section</h3>
-              <p class="card-subtitle">Configure the USP statement, key metrics, and the three service highlights.</p>
+              <h3 class="card-title">Manage {{ siteData.nav_services }} Section</h3>
+              <p class="card-subtitle">Configure the statement, key metrics, and the three service highlights.</p>
             </div>
             
             <form @submit.prevent="handleSave" class="dashboard-form">
@@ -320,7 +320,7 @@
               <div class="form-section">
                 <div class="section-title-bar">
                   <span class="section-badge">01</span>
-                  <h4 class="section-title">USP Title & Description</h4>
+                  <h4 class="section-title">{{ siteData.nav_services }} Title & Description</h4>
                 </div>
                 
                 <div class="form-grid">
@@ -347,7 +347,7 @@
               <div class="form-section">
                 <div class="section-title-bar">
                   <span class="section-badge">02</span>
-                  <h4 class="section-title">USP Service Cards (Right Panel)</h4>
+                  <h4 class="section-title">{{ siteData.nav_services }} Service Cards (Right Panel)</h4>
                 </div>
                 <p class="hint-text" style="margin-top: -10px; margin-bottom: 12px;">Customize the title, metrics, description, and tags for each service card.</p>
                 
@@ -414,7 +414,7 @@
           <!-- Section: Case Studies (Dashboard Form) -->
           <div v-if="activeSection === 'casestudy'" class="workspace-card animated-fade-in" id="casestudy-section-card">
             <div class="card-header">
-              <h3 class="card-title">Manage Case Studies</h3>
+              <h3 class="card-title">Manage {{ siteData.nav_portfolio }}</h3>
               <p class="card-subtitle">Configure the titles, descriptions, buttons, and icons for the three service cards.</p>
             </div>
             
@@ -423,7 +423,7 @@
               <div class="form-section">
                 <div class="section-title-bar">
                   <span class="section-badge">01</span>
-                  <h4 class="section-title">Case Studies Header Info</h4>
+                  <h4 class="section-title">{{ siteData.nav_portfolio }} Header Info</h4>
                 </div>
                 <div class="form-grid">
                   <div class="form-group col-span-2">
@@ -446,7 +446,7 @@
                 <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="section-badge">02</span>
-                    <h4 class="section-title">Case Studies & Service Cards</h4>
+                    <h4 class="section-title">{{ siteData.nav_portfolio }} & Service Cards</h4>
                   </div>
                   <button type="button" @click="addCaseStudy" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: white; border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer;" id="btn-add-case-study">
                     + Add New Card
@@ -517,7 +517,7 @@
           <!-- Section: Professional Journey (Dashboard Form) -->
           <div v-if="activeSection === 'career'" class="workspace-card animated-fade-in" id="career-section-card">
             <div class="card-header">
-              <h3 class="card-title">Manage Professional Journey</h3>
+              <h3 class="card-title">Manage {{ siteData.nav_experience }}</h3>
               <p class="card-subtitle">Configure timeline items, dates, and roles dynamically.</p>
             </div>
             
@@ -526,7 +526,7 @@
               <div class="form-section">
                 <div class="section-title-bar">
                   <span class="section-badge">01</span>
-                  <h4 class="section-title">General Section Header Info</h4>
+                  <h4 class="section-title">General {{ siteData.nav_experience }} Settings</h4>
                 </div>
                 
                 <div class="form-grid">
@@ -603,7 +603,7 @@
           <!-- Section: About Me (Dashboard Form) -->
           <div v-if="activeSection === 'about'" class="workspace-card animated-fade-in" id="about-section-card">
             <div class="card-header">
-              <h3 class="card-title">Manage About Me Section</h3>
+              <h3 class="card-title">Manage {{ siteData.nav_about }} Section</h3>
               <p class="card-subtitle">Edit your biography, skill tags, and quick stats highlights.</p>
             </div>
             
