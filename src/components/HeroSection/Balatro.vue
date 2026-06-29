@@ -36,7 +36,7 @@ void main() {
 `;
 
 const fragmentShader = `
-precision highp float;
+precision mediump float;
 
 #define PI 3.14159265359
 
@@ -168,7 +168,9 @@ let cleanup = null;
 const init = () => {
   if (!containerRef.value) return;
   const container = containerRef.value;
-  const renderer = new Renderer();
+  const renderer = new Renderer({
+    dpr: Math.min(window.devicePixelRatio || 1, 1.2)
+  });
   const gl = renderer.gl;
   gl.clearColor(0, 0, 0, 1);
 
