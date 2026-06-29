@@ -355,15 +355,9 @@
                   <div v-for="(service, index) in siteData.usp_services" :key="index" class="form-row-fluent" style="flex-direction: column; align-items: stretch; padding: 18px; gap: 12px; background-color: rgba(20, 21, 28, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px;">
                     <div style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Service Card #{{ index + 1 }}</div>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                      <div class="row-cell">
-                        <label class="form-label" style="font-size: 0.72rem;">Card Title</label>
-                        <input type="text" v-model="service.title" class="form-input" required />
-                      </div>
-                      <div class="row-cell">
-                        <label class="form-label" style="font-size: 0.72rem;">Subtext / Metrics (e.g. 100+ Project)</label>
-                        <input type="text" v-model="service.projects" class="form-input" required />
-                      </div>
+                    <div class="row-cell">
+                      <label class="form-label" style="font-size: 0.72rem;">Card Title</label>
+                      <input type="text" v-model="service.title" class="form-input" required />
                     </div>
                     
                     <div class="row-cell">
