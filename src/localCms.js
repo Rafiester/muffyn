@@ -14,6 +14,7 @@ const DEFAULT_SITE_DATA = {
   cv_filename: '',
   cv_button_text: 'Download CV',
   cv_uploaded_at: '',
+  usp_prefix: 'SERVICES',
   usp_title: 'What Can I Do For Your Needs',
   usp_description: "lorem ipsum is simply dummy text of the printing and typesetting industry. lorem ipsum has been the industry's standard dummy text ever since the",
   meta_title: 'Professional | Graphic Designer & Web Developer Portfolio',
@@ -44,6 +45,7 @@ const DEFAULT_SITE_DATA = {
       tags: 'Mobile, iOS, Android' 
     }
   ],
+  case_studies_prefix: 'PORTFOLIO',
   case_studies_title: 'Case Studies',
   case_studies_description: 'A showcase of my recent creative works, system configurations, and frontend development projects.',
   case_studies: [
@@ -71,6 +73,7 @@ const DEFAULT_SITE_DATA = {
       desc: "Developed frontend landing pages and user dashboards using Vue.js and Bootstrap. Collaborated closely with UI designers to execute design layouts."
     }
   ],
+  about_prefix: 'WHO AM I',
   about_title: 'Bridging Business Needs & Technical Execution',
   about_description: 'A hybrid approach to digital product development, combining system analysis, frontend engineering, and agile project management to deliver successful software solutions.',
   about_story: 'I am a hybrid professional who speaks both the language of code and the language of business. With a background in system analysis and frontend development (Vue/Nuxt), I transitioned into Project Management to ensure that beautiful code actually solves real-world problems. I build systems, manage timelines, and protect my team\'s focus.',
@@ -123,6 +126,18 @@ export const localCms = {
     }
 
     let needsSave = false;
+    if (!siteDataObj.usp_prefix) {
+      siteDataObj.usp_prefix = DEFAULT_SITE_DATA.usp_prefix;
+      needsSave = true;
+    }
+    if (!siteDataObj.case_studies_prefix) {
+      siteDataObj.case_studies_prefix = DEFAULT_SITE_DATA.case_studies_prefix;
+      needsSave = true;
+    }
+    if (!siteDataObj.about_prefix) {
+      siteDataObj.about_prefix = DEFAULT_SITE_DATA.about_prefix;
+      needsSave = true;
+    }
     if (!siteDataObj.career_items) {
       siteDataObj.career_items = DEFAULT_SITE_DATA.career_items;
       needsSave = true;

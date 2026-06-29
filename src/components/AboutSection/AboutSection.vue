@@ -3,7 +3,7 @@
     <div class="container">
       <!-- Section Header -->
       <div class="about-header">
-        <span class="about-eyebrow">— WHO AM I</span>
+        <span class="about-eyebrow">— {{ prefix }}</span>
         <h2 class="about-title" v-html="formattedTitle"></h2>
         <p class="about-description">
           {{ description }}
@@ -52,6 +52,10 @@
 import { computed } from 'vue';
 
 const props = defineProps({
+  prefix: {
+    type: String,
+    default: 'WHO AM I'
+  },
   title: {
     type: String,
     default: 'Bridging Business Needs & Technical Execution'

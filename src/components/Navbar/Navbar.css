@@ -78,6 +78,11 @@
   align-items: center;
 }
 
+.navbar-actions .btn-pill {
+  padding: 8px 20px;
+  font-size: 0.9rem;
+}
+
 /* Hamburger Menu Button */
 .navbar-hamburger {
   display: none;

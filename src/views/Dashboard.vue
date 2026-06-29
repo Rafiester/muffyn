@@ -346,6 +346,12 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
+                    <label for="usp-prefix" class="form-label">USP Prefix Text</label>
+                    <input type="text" id="usp-prefix" v-model="siteData.usp_prefix" class="form-input" required />
+                    <span class="hint-text">Appears above the USP title (e.g. "SERVICES").</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
                     <label for="usp-title" class="form-label">USP Title Text</label>
                     <input type="text" id="usp-title" v-model="siteData.usp_title" class="form-input" required />
                     <span class="hint-text">Highlighted terms: "Your Needs" or "needs" will be automatically highlighted in yellow.</span>
@@ -414,10 +420,33 @@
             </div>
             
             <form @submit.prevent="handleSave" class="dashboard-form">
+              <!-- Header Configuration -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">01</span>
+                  <h4 class="section-title">Case Studies Header Info</h4>
+                </div>
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="case-studies-prefix" class="form-label">Section Prefix</label>
+                    <input type="text" id="case-studies-prefix" v-model="siteData.case_studies_prefix" class="form-input" required />
+                    <span class="hint-text">Appears above the case studies title (e.g. "PORTFOLIO").</span>
+                  </div>
+                  <div class="form-group col-span-2">
+                    <label for="case-studies-title" class="form-label">Section Title</label>
+                    <input type="text" id="case-studies-title" v-model="siteData.case_studies_title" class="form-input" required />
+                  </div>
+                  <div class="form-group col-span-2">
+                    <label for="case-studies-description" class="form-label">Section Description</label>
+                    <textarea id="case-studies-description" v-model="siteData.case_studies_description" class="form-input text-area" rows="2" required></textarea>
+                  </div>
+                </div>
+              </div>
+
               <div class="form-section">
                 <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                   <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="section-badge">01</span>
+                    <span class="section-badge">02</span>
                     <h4 class="section-title">Case Studies & Service Cards</h4>
                   </div>
                   <button type="button" @click="addCaseStudy" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: white; border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer;" id="btn-add-case-study">
@@ -588,6 +617,12 @@
                 
                 <div class="form-grid">
                   <div class="form-group col-span-2">
+                    <label for="about-prefix" class="form-label">Section Prefix</label>
+                    <input type="text" id="about-prefix" v-model="siteData.about_prefix" class="form-input" required />
+                    <span class="hint-text">Appears above the section title (e.g. "WHO AM I").</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
                     <label for="about-title" class="form-label">Section Title</label>
                     <input type="text" id="about-title" v-model="siteData.about_title" class="form-input" required />
                     <span class="hint-text">Highlighted terms: "Business" or "Technical" will automatically be highlighted in red accent.</span>
@@ -709,6 +744,7 @@ const siteData = ref({
   cv_filename: '',
   cv_button_text: 'Download CV',
   cv_uploaded_at: '',
+  about_prefix: '',
   about_title: '',
   about_description: '',
   about_story: '',
@@ -717,12 +753,16 @@ const siteData = ref({
   about_stat_experience: '',
   about_stat_delivery: '',
   about_stat_scope: '',
+  usp_prefix: '',
   usp_title: '',
   usp_description: '',
   meta_title: '',
   meta_description: '',
   usp_stats: [],
   usp_services: [],
+  case_studies_prefix: '',
+  case_studies_title: '',
+  case_studies_description: '',
   case_studies: [],
   career_prefix: '',
   career_title: '',

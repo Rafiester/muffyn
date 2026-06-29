@@ -66,11 +66,13 @@ onMounted(() => {
         :cvButtonText="siteData.cv_button_text"
       />
       <UspSection 
+        :prefix="siteData.usp_prefix"
         :title="siteData.usp_title"
         :description="siteData.usp_description"
         :services="siteData.usp_services"
       />
       <CaseStudySection 
+        :prefix="siteData.case_studies_prefix"
         :title="siteData.case_studies_title"
         :description="siteData.case_studies_description"
         :cards="siteData.case_studies" 
@@ -82,6 +84,7 @@ onMounted(() => {
         :timelineItems="siteData.career_items"
       />
       <AboutSection 
+        :prefix="siteData.about_prefix"
         :title="siteData.about_title"
         :description="siteData.about_description"
         :story="siteData.about_story"
