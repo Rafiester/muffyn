@@ -780,16 +780,23 @@
                 </div>
                 
                 <div class="form-grid">
-                  <div class="form-group col-span-2">
+                  <div class="form-group col-span-2" id="theme-accent-container">
                     <label for="theme-accent" class="form-label">Theme Accent Color</label>
-                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 6px;">
-                      <!-- Color Picker (Input type color) -->
-                      <input 
-                        type="color" 
-                        id="theme-accent-picker" 
-                        v-model="siteData.theme_accent" 
-                        style="width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; cursor: pointer; background: transparent;"
-                      />
+                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 6px; position: relative;">
+                      
+                      <!-- Fluent Custom Trigger Button -->
+                      <button 
+                        type="button" 
+                        @click="showColorPicker = !showColorPicker"
+                        style="width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; cursor: pointer; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; transition: all 0.2s;"
+                        id="theme-accent-trigger"
+                      >
+                        <span 
+                          style="width: 28px; height: 28px; border-radius: 4px; display: block;" 
+                          :style="{ backgroundColor: siteData.theme_accent }"
+                        ></span>
+                      </button>
+
                       <!-- Hex text input -->
                       <input 
                         type="text" 
@@ -800,9 +807,10 @@
                         placeholder="#BD3636"
                         required 
                       />
+
                       <!-- Live Preview Badge -->
                       <div 
-                        style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 4px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);"
+                        style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 6px; background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);"
                       >
                         <span 
                           style="width: 12px; height: 12px; border-radius: 50%; display: inline-block;" 
@@ -810,8 +818,35 @@
                         ></span>
                         <span style="font-size: 0.8rem; color: var(--text-secondary);">Live Accent Preview</span>
                       </div>
+
+                      <!-- Fluent Dropdown/Popup Color Picker (Small & Premium) -->
+                      <div 
+                        v-if="showColorPicker" 
+                        class="fluent-color-picker-popup animated-zoom-in"
+                        style="position: absolute; bottom: 54px; left: 0; z-index: 100; width: 172px; padding: 12px; background-color: #1e1f26; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.6); display: flex; flex-direction: column; gap: 8px;"
+                      >
+                        <div style="font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">Presets</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                          <button
+                            v-for="color in presetColors"
+                            :key="color"
+                            type="button"
+                            @click="selectPresetColor(color)"
+                            style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"
+                            :style="{ 
+                              backgroundColor: color, 
+                              borderColor: siteData.theme_accent.toLowerCase() === color.toLowerCase() ? '#ffffff' : 'transparent'
+                            }"
+                          >
+                            <svg v-if="siteData.theme_accent.toLowerCase() === color.toLowerCase()" viewBox="0 0 24 24" width="10" height="10" style="color: white; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
                     </div>
-                    <span class="hint-text">Choose a color from the palette picker or input a hex color code. The change will apply instantly.</span>
+                    <span class="hint-text">Click the square swatch to open SaaS Preset palette. Hex code updates instantly.</span>
                   </div>
                 </div>
               </div>
@@ -931,6 +966,33 @@ watch(() => siteData.value.theme_accent, (newColor) => {
   if (newColor && /^#[0-9A-F]{6}$/i.test(newColor)) {
     applyThemeColor(newColor);
   }
+});
+
+// Custom SaaS Fluent color picker state
+const showColorPicker = ref(false);
+const presetColors = [
+  '#BD3636', // Crimson Red
+  '#4361EE', // Electric Blue
+  '#7209B7', // Royal Purple
+  '#27C93F', // Emerald Green
+  '#FF8C00', // Neon Orange
+  '#00F2FE', // Cyan/Teal
+  '#EA4C89', // Instagram Accent Pink
+  '#F72585'  // Hot Pink
+];
+const selectPresetColor = (color) => {
+  siteData.value.theme_accent = color;
+};
+const closeColorPicker = (e) => {
+  if (!e.target.closest('#theme-accent-container')) {
+    showColorPicker.value = false;
+  }
+};
+onMounted(() => {
+  document.addEventListener('click', closeColorPicker);
+});
+onUnmounted(() => {
+  document.removeEventListener('click', closeColorPicker);
 });
 
 const handleClientLogoUpload = (event, idx) => {
