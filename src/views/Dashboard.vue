@@ -103,6 +103,20 @@
           </svg>
           <span class="nav-label">About Me</span>
         </button>
+
+        <div class="nav-divider"></div>
+
+        <button 
+          class="nav-item" 
+          :class="{ 'active': activeSection === 'seo' }"
+          @click="setActiveSection('seo')"
+          id="nav-item-seo"
+        >
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
+          </svg>
+          <span class="nav-label">SEO Settings</span>
+        </button>
       </nav>
       
       <!-- Sidebar Footer -->
@@ -159,42 +173,12 @@
           <!-- Section: Dashboard (Dashboard Form) -->
           <div v-if="activeSection === 'dashboard'" class="workspace-card animated-fade-in" id="dashboard-section-card">
             <div class="card-header">
-              <h3 class="card-title">Dashboard Settings</h3>
-              <p class="card-subtitle">Manage site-wide meta attributes, SEO titles, and descriptions.</p>
+              <h3 class="card-title">Dashboard</h3>
+              <p class="card-subtitle">Welcome to the administration panel.</p>
             </div>
-            
-            <form @submit.prevent="handleSave" class="dashboard-form">
-              <div class="form-section">
-                <div class="section-title-bar">
-                  <span class="section-badge">01</span>
-                  <h4 class="section-title">Search Engine Optimization (SEO)</h4>
-                </div>
-                
-                <div class="form-grid">
-                  <div class="form-group col-span-2">
-                    <label for="meta-title" class="form-label">Meta Title</label>
-                    <input type="text" id="meta-title" v-model="siteData.meta_title" class="form-input" required />
-                    <span class="hint-text">This title is displayed in browser tabs and search engine results.</span>
-                  </div>
-
-                  <div class="form-group col-span-2">
-                    <label for="meta-description" class="form-label">Meta Description</label>
-                    <textarea id="meta-description" v-model="siteData.meta_description" class="form-input text-area" rows="3" required></textarea>
-                    <span class="hint-text">A brief summary of your portfolio for search engines (recommended 150-160 characters).</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Save Button -->
-              <div class="form-actions-bar">
-                <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-dashboard">
-                  <svg viewBox="0 0 24 24" width="16" height="16" class="btn-icon">
-                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" fill="currentColor"/>
-                  </svg>
-                  <span>Save Changes</span>
-                </button>
-              </div>
-            </form>
+            <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+              <p>Dashboard main view is currently empty. Navigate to other sections in the sidebar to configure content.</p>
+            </div>
           </div>
 
           <!-- Section: Hero (Dashboard Form) -->
@@ -681,6 +665,47 @@
               <!-- Save Button -->
               <div class="form-actions-bar">
                 <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-about">
+                  <svg viewBox="0 0 24 24" width="16" height="16" class="btn-icon">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" fill="currentColor"/>
+                  </svg>
+                  <span>Save Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Section: SEO Settings (Dashboard Form) -->
+          <div v-if="activeSection === 'seo'" class="workspace-card animated-fade-in" id="seo-section-card">
+            <div class="card-header">
+              <h3 class="card-title">SEO Settings</h3>
+              <p class="card-subtitle">Manage site-wide meta attributes, SEO titles, and descriptions.</p>
+            </div>
+            
+            <form @submit.prevent="handleSave" class="dashboard-form">
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">01</span>
+                  <h4 class="section-title">Search Engine Optimization (SEO)</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="meta-title" class="form-label">Meta Title</label>
+                    <input type="text" id="meta-title" v-model="siteData.meta_title" class="form-input" required />
+                    <span class="hint-text">This title is displayed in browser tabs and search engine results.</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="meta-description" class="form-label">Meta Description</label>
+                    <textarea id="meta-description" v-model="siteData.meta_description" class="form-input text-area" rows="3" required></textarea>
+                    <span class="hint-text">A brief summary of your portfolio for search engines (recommended 150-160 characters).</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Save Button -->
+              <div class="form-actions-bar">
+                <button type="submit" class="btn-pill-fluent save-btn" id="btn-save-seo">
                   <svg viewBox="0 0 24 24" width="16" height="16" class="btn-icon">
                     <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" fill="currentColor"/>
                   </svg>
