@@ -1,7 +1,7 @@
 <template>
   <section ref="heroRef" class="hero-section" id="home">
     <!-- WebGL Background Canvas -->
-    <Balatro class="bg-canvas" />
+    <Balatro class="bg-canvas" :color1="themeAccent" />
 
     <!-- Custom Follower Cursor -->
     <div 
@@ -144,6 +144,10 @@ const props = defineProps({
   cvButtonText: {
     type: String,
     default: 'Download CV'
+  },
+  themeAccent: {
+    type: String,
+    default: '#bd3636'
   }
 });
 

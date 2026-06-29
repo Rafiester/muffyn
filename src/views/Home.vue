@@ -73,6 +73,7 @@ onMounted(() => {
         :cvData="siteData.cv_data"
         :cvFilename="siteData.cv_filename"
         :cvButtonText="siteData.cv_button_text"
+        :themeAccent="siteData.theme_accent"
       />
       <UspSection 
         :prefix="siteData.usp_prefix"
