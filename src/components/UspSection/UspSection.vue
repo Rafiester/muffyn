@@ -2,30 +2,20 @@
   <section class="usp-section" id="services">
     <div class="container usp-container">
       
-      <!-- Left Column: Title, Description, and Stats Grid -->
-      <div class="usp-left">
+      <!-- Section Header (Title & Description above cards) -->
+      <div class="usp-header">
         <!-- Section Prefix -->
         <div class="section-prefix">
           <span class="prefix-line"></span>
           <span class="prefix-text">{{ prefix }}</span>
         </div>
-
         <h2 class="usp-title" v-html="formattedTitle"></h2>
-        
         <p class="usp-description">
           {{ description }}
         </p>
-
-        <div class="usp-stats-grid">
-          <!-- Stats Loop -->
-          <div v-for="(stat, index) in stats" :key="index" class="stat-item">
-            <span class="stat-number">{{ stat.number }}</span>
-            <span class="stat-label">{{ stat.label }}</span>
-          </div>
-        </div>
       </div>
 
-      <!-- Right Column: Services Row List -->
+      <!-- Services Grid/List -->
       <div class="usp-right">
         
         <!-- Services Loop -->
@@ -70,7 +60,16 @@
           </div>
           <div class="service-meta">
             <h3 class="service-title">{{ service.title }}</h3>
-            <span class="service-projects">{{ service.projects }}</span>
+            <p v-if="service.description" class="service-desc">{{ service.description }}</p>
+            <div v-if="service.tags && service.tags.trim()" class="service-tags">
+              <span 
+                v-for="(tag, tagIdx) in service.tags.split(',').map(t => t.trim()).filter(Boolean)" 
+                :key="tagIdx" 
+                class="service-tag"
+              >
+                {{ tag }}
+              </span>
+            </div>
           </div>
           <div class="service-arrow">
             <svg viewBox="0 0 24 24" width="24" height="24">
@@ -100,10 +99,6 @@ const props = defineProps({
   description: {
     type: String,
     default: ''
-  },
-  stats: {
-    type: Array,
-    default: () => []
   },
   services: {
     type: Array,

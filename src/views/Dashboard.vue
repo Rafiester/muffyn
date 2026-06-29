@@ -358,45 +358,37 @@
                 </div>
               </div>
 
-              <!-- Stats Settings -->
-              <div class="form-section">
-                <div class="section-title-bar">
-                  <span class="section-badge">02</span>
-                  <h4 class="section-title">USP Statistics Metrics (Left Grid)</h4>
-                </div>
-                <p class="hint-text" style="margin-top: -10px; margin-bottom: 6px;">These 4 metrics display in a 2x2 grid beside the service cards.</p>
-                
-                <div class="form-grid">
-                  <div v-for="(stat, index) in siteData.usp_stats" :key="index" class="form-row-fluent" style="flex-direction: row; align-items: center; padding: 14px 18px; gap: 16px;">
-                    <div class="row-cell" style="flex: 2;">
-                      <label class="form-label" style="font-size: 0.72rem;">Metric (e.g. 50+)</label>
-                      <input type="text" v-model="stat.number" class="form-input" required />
-                    </div>
-                    <div class="row-cell" style="flex: 4;">
-                      <label class="form-label" style="font-size: 0.72rem;">Label (e.g. Clients)</label>
-                      <input type="text" v-model="stat.label" class="form-input" required />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <!-- Services Cards Settings -->
               <div class="form-section">
                 <div class="section-title-bar">
-                  <span class="section-badge">03</span>
+                  <span class="section-badge">02</span>
                   <h4 class="section-title">USP Service Cards (Right Panel)</h4>
                 </div>
-                <p class="hint-text" style="margin-top: -10px; margin-bottom: 6px;">Three custom styled cards with hover animations and vector illustrations.</p>
+                <p class="hint-text" style="margin-top: -10px; margin-bottom: 12px;">Customize the title, metrics, description, and tags for each service card.</p>
                 
-                <div class="social-list">
-                  <div v-for="(service, index) in siteData.usp_services" :key="index" class="form-row-fluent" style="flex-direction: row; align-items: center; padding: 14px 18px; gap: 16px;">
-                    <div class="row-cell" style="flex: 3;">
-                      <label class="form-label" style="font-size: 0.72rem;">Card Title</label>
-                      <input type="text" v-model="service.title" class="form-input" required />
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                  <div v-for="(service, index) in siteData.usp_services" :key="index" class="form-row-fluent" style="flex-direction: column; align-items: stretch; padding: 18px; gap: 12px; background-color: rgba(20, 21, 28, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                    <div style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Service Card #{{ index + 1 }}</div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                      <div class="row-cell">
+                        <label class="form-label" style="font-size: 0.72rem;">Card Title</label>
+                        <input type="text" v-model="service.title" class="form-input" required />
+                      </div>
+                      <div class="row-cell">
+                        <label class="form-label" style="font-size: 0.72rem;">Subtext / Metrics (e.g. 100+ Project)</label>
+                        <input type="text" v-model="service.projects" class="form-input" required />
+                      </div>
                     </div>
-                    <div class="row-cell" style="flex: 3;">
-                      <label class="form-label" style="font-size: 0.72rem;">Subtext / Metrics (e.g. 12+ Projects Completed)</label>
-                      <input type="text" v-model="service.projects" class="form-input" required />
+                    
+                    <div class="row-cell">
+                      <label class="form-label" style="font-size: 0.72rem;">Description</label>
+                      <textarea v-model="service.description" class="form-input text-area" rows="2" placeholder="Brief explanation of the service..."></textarea>
+                    </div>
+
+                    <div class="row-cell">
+                      <label class="form-label" style="font-size: 0.72rem;">Tags (comma separated, e.g. Figma, UI/UX, Design)</label>
+                      <input type="text" v-model="service.tags" class="form-input" placeholder="Tag 1, Tag 2, Tag 3" />
                     </div>
                   </div>
                 </div>
@@ -423,15 +415,25 @@
             
             <form @submit.prevent="handleSave" class="dashboard-form">
               <div class="form-section">
-                <div class="section-title-bar">
-                  <span class="section-badge">01</span>
-                  <h4 class="section-title">Case Studies & Service Cards</h4>
+                <div class="section-title-bar" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="section-badge">01</span>
+                    <h4 class="section-title">Case Studies & Service Cards</h4>
+                  </div>
+                  <button type="button" @click="addCaseStudy" class="btn-pill-fluent" style="font-size: 0.8rem; padding: 6px 14px; background-color: var(--accent); color: white; border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer;" id="btn-add-case-study">
+                    + Add New Card
+                  </button>
                 </div>
-                <p class="hint-text" style="margin-top: -10px; margin-bottom: 6px;">Configure the content of the three columns in the case study section.</p>
+                <p class="hint-text" style="margin-top: 6px; margin-bottom: 16px;">Configure the content of the service cards in the case study section.</p>
                 
                 <div style="display: flex; flex-direction: column; gap: 24px;">
-                  <div v-for="(study, index) in siteData.case_studies" :key="index" class="form-row-fluent" style="flex-direction: column; align-items: stretch; padding: 20px; gap: 16px; background-color: rgba(20, 21, 28, 0.4);">
-                    <div style="font-weight: 700; color: var(--accent); font-size: 0.9rem;">Card #{{ index + 1 }} Configuration</div>
+                  <div v-for="(study, index) in siteData.case_studies" :key="index" class="form-row-fluent" :id="'case-study-config-' + index" style="flex-direction: column; align-items: stretch; padding: 20px; gap: 16px; background-color: rgba(20, 21, 28, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div style="font-weight: 700; color: var(--accent); font-size: 0.9rem;">Card #{{ index + 1 }} Configuration</div>
+                      <button type="button" @click="deleteCaseStudy(index)" class="btn-pill-fluent" style="font-size: 0.75rem; padding: 4px 10px; background-color: #ef5350; color: white; border: none; cursor: pointer;" :id="'btn-delete-case-study-' + index">
+                        Delete Card
+                      </button>
+                    </div>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                       <div class="row-cell">
@@ -655,12 +657,45 @@
 
         </div>
       </main>
+
+
+    <!-- SaaS Fluent Dialog Popup -->
+    <div v-if="activeModal" class="fluent-dialog-overlay animated-fade-in">
+      <div class="fluent-dialog-card animated-zoom-in">
+        <div class="fluent-dialog-header">
+          <div class="fluent-dialog-icon-wrap" :class="activeModal.type">
+            <!-- Warning/Danger/Success/Info icons -->
+            <svg v-if="activeModal.type === 'warning' || activeModal.type === 'danger'" viewBox="0 0 24 24" width="20" height="20">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor"/>
+            </svg>
+            <svg v-else-if="activeModal.type === 'success'" viewBox="0 0 24 24" width="20" height="20">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>
+            </svg>
+            <svg v-else viewBox="0 0 24 24" width="20" height="20">
+              <path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h4 class="fluent-dialog-title">{{ activeModal.title }}</h4>
+        </div>
+        <div class="fluent-dialog-body">
+          <p>{{ activeModal.message }}</p>
+        </div>
+        <div class="fluent-dialog-actions">
+          <button v-if="activeModal.showCancel !== false" type="button" class="fluent-dialog-btn btn-secondary" @click="activeModal = null">
+            Cancel
+          </button>
+          <button type="button" class="fluent-dialog-btn" :class="'btn-' + (activeModal.type || 'primary')" @click="confirmModal">
+            {{ activeModal.confirmText || 'OK' }}
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { localCms } from '../localCms';
 
@@ -726,11 +761,68 @@ const handleClientLogoUpload = (event, idx) => {
   reader.readAsDataURL(file);
 };
 
+const activeModal = ref(null);
+
+const triggerModal = ({ title, message, type = 'info', onConfirm, showCancel = true, confirmText = 'Confirm' }) => {
+  activeModal.value = { title, message, type, onConfirm, showCancel, confirmText };
+};
+
+const confirmModal = () => {
+  if (activeModal.value && activeModal.value.onConfirm) {
+    activeModal.value.onConfirm();
+  }
+  activeModal.value = null;
+};
+
+const handleCvUpload = (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.type !== 'application/pdf') {
+    showNotification('Supported format: PDF only', 'error');
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    showNotification('CV file must be under 5MB', 'error');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    siteData.value.cv_data = e.target.result;
+    siteData.value.cv_filename = file.name;
+    siteData.value.cv_uploaded_at = new Date().toLocaleString();
+    showNotification(`CV "${file.name}" uploaded successfully!`);
+  };
+  reader.readAsDataURL(file);
+};
+
+const removeCv = () => {
+  triggerModal({
+    title: 'Remove CV',
+    message: 'Are you sure you want to remove the uploaded CV file?',
+    type: 'danger',
+    confirmText: 'Remove',
+    onConfirm: () => {
+      siteData.value.cv_data = '';
+      siteData.value.cv_filename = '';
+      siteData.value.cv_uploaded_at = '';
+      showNotification('CV file removed.');
+    }
+  });
+};
+
 const removeClientLogo = idx => {
-  siteData.value.clientLogos[idx].logo_data = '';
-  siteData.value.clientLogos[idx].logo_filename = '';
-  siteData.value.clientLogos[idx].logo_svg = '';
-  showNotification(`Logo removed for client #${idx + 1}`);
+  triggerModal({
+    title: 'Remove Client Logo',
+    message: `Are you sure you want to remove the logo for Client #${idx + 1}?`,
+    type: 'danger',
+    confirmText: 'Remove',
+    onConfirm: () => {
+      siteData.value.clientLogos[idx].logo_data = '';
+      siteData.value.clientLogos[idx].logo_filename = '';
+      siteData.value.clientLogos[idx].logo_svg = '';
+      showNotification(`Logo removed for client #${idx + 1}`);
+    }
+  });
 };
 
 const handleCardIconUpload = (event, idx) => {
@@ -758,11 +850,53 @@ const handleCardIconUpload = (event, idx) => {
 };
 
 const removeCardIcon = idx => {
-  if (siteData.value.case_studies[idx]) {
-    siteData.value.case_studies[idx].icon_data = '';
-    siteData.value.case_studies[idx].icon_filename = '';
+  triggerModal({
+    title: 'Remove Card Icon',
+    message: `Are you sure you want to remove the custom icon for Card #${idx + 1}?`,
+    type: 'danger',
+    confirmText: 'Remove',
+    onConfirm: () => {
+      if (siteData.value.case_studies[idx]) {
+        siteData.value.case_studies[idx].icon_data = '';
+        siteData.value.case_studies[idx].icon_filename = '';
+      }
+      showNotification(`Icon removed for card #${idx + 1}`);
+    }
+  });
+};
+
+const addCaseStudy = () => {
+  if (!siteData.value.case_studies) {
+    siteData.value.case_studies = [];
   }
-  showNotification(`Icon removed for card #${idx + 1}`);
+  siteData.value.case_studies.push({
+    title: 'New Case Study',
+    desc: 'i have many years experience with social media design, creating art work and designs that will promote businesses. i have a lot',
+    button_text: 'See More',
+    icon_type: 'design'
+  });
+  const newIndex = siteData.value.case_studies.length - 1;
+  nextTick(() => {
+    const el = document.getElementById(`case-study-config-${newIndex}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+};
+
+const deleteCaseStudy = (index) => {
+  triggerModal({
+    title: 'Delete Case Study',
+    message: `Are you sure you want to delete Case Study Card #${index + 1}? This action cannot be undone.`,
+    type: 'danger',
+    confirmText: 'Delete',
+    onConfirm: () => {
+      if (siteData.value.case_studies) {
+        siteData.value.case_studies.splice(index, 1);
+        showNotification(`Case study #${index + 1} deleted`);
+      }
+    }
+  });
 };
 
 const addCareerItem = () => {
@@ -777,12 +911,19 @@ const addCareerItem = () => {
 };
 
 const deleteCareerItem = (index) => {
-  if (siteData.value.career_items) {
-    siteData.value.career_items.splice(index, 1);
-  }
+  triggerModal({
+    title: 'Delete Timeline Card',
+    message: `Are you sure you want to delete Card #${index + 1}? This action cannot be undone.`,
+    type: 'danger',
+    confirmText: 'Delete',
+    onConfirm: () => {
+      if (siteData.value.career_items) {
+        siteData.value.career_items.splice(index, 1);
+        showNotification(`Card #${index + 1} deleted`);
+      }
+    }
+  });
 };
-
-
 
 const socialLinks = ref([]);
 const clientLogos = ref([]);
@@ -809,15 +950,23 @@ const handleSave = () => {
       socialLinks: socialLinks.value,
       clientLogos: clientLogos.value
     });
-    showNotification('Changes saved successfully to Local Storage!');
+    showNotification('Changes saved successfully!');
   } catch (error) {
     showNotification('Failed to save changes.', 'error');
   }
 };
 
 const handleLogout = () => {
-  localCms.logout();
-  router.push('/th3w3b4dm1n/login');
+  triggerModal({
+    title: 'Sign Out',
+    message: 'Are you sure you want to sign out from the admin dashboard?',
+    type: 'warning',
+    confirmText: 'Sign Out',
+    onConfirm: () => {
+      localCms.logout();
+      router.push('/th3w3b4dm1n/login');
+    }
+  });
 };
 
 const toggleSidebar = () => {

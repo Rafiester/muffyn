@@ -68,7 +68,6 @@ onMounted(() => {
       <UspSection 
         :title="siteData.usp_title"
         :description="siteData.usp_description"
-        :stats="siteData.usp_stats"
         :services="siteData.usp_services"
       />
       <CaseStudySection 

@@ -984,8 +984,13 @@
 
 /* Notification banners */
 .notification-banner {
-  margin-bottom: 24px;
-  animation: slideDown 0.3s ease-out;
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10010;
+  margin-bottom: 0;
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .notification-content {
@@ -1184,6 +1189,156 @@
 .sidebar-collapsed .side-logout-btn {
   justify-content: center;
   padding: 0;
+}
+
+/* Fluent Confirmation Dialog Popup Styling */
+.fluent-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 16, 22, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.fluent-dialog-card {
+  background-color: #24252f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--text-primary);
+}
+
+.fluent-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fluent-dialog-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fluent-dialog-icon-wrap.info {
+  background-color: rgba(0, 120, 212, 0.15);
+  color: #0078d4;
+}
+
+.fluent-dialog-icon-wrap.warning {
+  background-color: rgba(255, 140, 0, 0.15);
+  color: #ff8c00;
+}
+
+.fluent-dialog-icon-wrap.danger {
+  background-color: rgba(239, 83, 80, 0.15);
+  color: #ef5350;
+}
+
+.fluent-dialog-icon-wrap.success {
+  background-color: rgba(40, 255, 133, 0.15);
+  color: #28FF85;
+}
+
+.fluent-dialog-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.fluent-dialog-body {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.fluent-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.fluent-dialog-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fluent-dialog-btn.btn-secondary {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+.fluent-dialog-btn.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.fluent-dialog-btn.btn-primary {
+  background-color: #0078d4;
+  border: none;
+  color: white;
+}
+
+.fluent-dialog-btn.btn-primary:hover {
+  background-color: #106ebe;
+}
+
+.fluent-dialog-btn.btn-danger {
+  background-color: #ef5350;
+  border: none;
+  color: white;
+}
+
+.fluent-dialog-btn.btn-danger:hover {
+  background-color: #e53935;
+}
+
+.fluent-dialog-btn.btn-warning {
+  background-color: #ff8c00;
+  border: none;
+  color: white;
+}
+
+.fluent-dialog-btn.btn-warning:hover {
+  background-color: #e07b00;
+}
+
+.fluent-dialog-btn.btn-success {
+  background-color: var(--accent);
+  border: none;
+  color: white;
+}
+
+.fluent-dialog-btn.btn-success:hover {
+  filter: brightness(1.1);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 

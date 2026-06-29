@@ -25,9 +25,24 @@ const DEFAULT_SITE_DATA = {
     { number: '10+', label: 'Experience' }
   ],
   usp_services: [
-    { title: 'UI/UX Design', projects: '100+ Project' },
-    { title: 'Ux Research', projects: '100+ Project' },
-    { title: 'Mobile App Design', projects: '100+ Project' }
+    { 
+      title: 'UI/UX Design', 
+      projects: '100+ Project', 
+      description: 'Crafting intuitive user interfaces and interactive prototypes with high visual fidelity and user-centered design principles.', 
+      tags: 'Figma, UI/UX, Wireframing' 
+    },
+    { 
+      title: 'Ux Research', 
+      projects: '100+ Project', 
+      description: 'Conducting thorough user interviews, usability testing, and competitive analysis to ground design decisions in real-world data.', 
+      tags: 'User Research, Usability Testing, Personas' 
+    },
+    { 
+      title: 'Mobile App Design', 
+      projects: '100+ Project', 
+      description: 'Designing responsive and pixel-perfect mobile screen components optimized for both iOS and Android layouts.', 
+      tags: 'Mobile, iOS, Android' 
+    }
   ],
   case_studies_title: 'Case Studies',
   case_studies_description: 'A showcase of my recent creative works, system configurations, and frontend development projects.',
@@ -156,7 +171,17 @@ export const localCms = {
       siteDataObj.about_stat_scope = DEFAULT_SITE_DATA.about_stat_scope;
       needsSave = true;
     }
-
+    if (siteDataObj.usp_services) {
+      siteDataObj.usp_services = siteDataObj.usp_services.map((service, idx) => {
+        const defaultService = DEFAULT_SITE_DATA.usp_services[idx] || {};
+        return {
+          title: service.title || defaultService.title || '',
+          projects: service.projects || defaultService.projects || '',
+          description: service.description !== undefined ? service.description : (defaultService.description || ''),
+          tags: service.tags !== undefined ? service.tags : (defaultService.tags || '')
+        };
+      });
+    }
 
     // Backward compatibility merge with defaults
     siteDataObj = { ...DEFAULT_SITE_DATA, ...siteDataObj };
