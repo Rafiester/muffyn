@@ -126,27 +126,82 @@ Install the Supabase JS library locally:
 npm install @supabase/supabase-js
 ```
 
-Initialize the client to communicate with your database:
+### Step 4: Code Implementation Structure
 
+The project uses a local-first cache strategy with background synchronization to connect to Supabase:
+
+#### A. Supabase Client ([src/supabase.js](file:///Users/flo/portfolio_dummy/src/supabase.js))
+Loads credentials from environmental variables and instantiates the client safely (returns `null` in case credentials are not configured):
 ```javascript
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-export async function fetchPortfolioFromDb() {
-  const { data, error } = await supabase
-    .from('portfolio_config')
-    .select('*')
-    .eq('id', 1)
-    .single();
-
-  if (error) {
-    console.error('Error fetching from Supabase:', error);
-    return null;
-  }
-  return data;
-}
+export const supabase = (supabaseUrl && supabaseAnonKey) 
+  ? createClient(supabaseUrl, supabaseAnonKey) 
+  : null;
 ```
+
+#### B. Synchronization Engine ([src/localCms.js](file:///Users/flo/portfolio_dummy/src/localCms.js))
+Provides background sync-down routines and automatically updates the Supabase table on dashboard save actions:
+```javascript
+  async saveData(data) {
+    // 1. Updates LocalStorage Cache
+    // 2. Triggers dynamic CSS accents
+    // 3. Writes directly to Supabase if client is initialized:
+    if (supabase && data.siteData) {
+      try {
+        await supabase
+          .from('portfolio_config')
+          .update({
+            site_data: data.siteData,
+            social_links: data.socialLinks || [],
+            client_logos: data.clientLogos || [],
+            updated_at: new Date()
+          })
+          .eq('id', 1);
+      } catch (err) {
+        console.error('Supabase write error:', err);
+      }
+    }
+  },
+
+  async syncFromSupabase(callback) {
+    if (!supabase) return;
+    try {
+      const { data, error } = await supabase
+        .from('portfolio_config')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+      if (error) {
+        console.error('Error syncing from Supabase:', error);
+        return;
+      }
+
+      if (data) {
+        // Sync cache and execute callbacks
+        localStorage.setItem(SITE_DATA_KEY, JSON.stringify(data.site_data));
+        localStorage.setItem(SOCIAL_LINKS_KEY, JSON.stringify(data.social_links));
+        localStorage.setItem(CLIENT_LOGOS_KEY, JSON.stringify(data.client_logos));
+        
+        if (data.site_data && data.site_data.theme_accent) {
+          applyThemeColor(data.site_data.theme_accent);
+        }
+
+        if (callback) {
+          callback({
+            siteData: data.site_data,
+            socialLinks: data.social_links,
+            clientLogos: data.client_logos
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Failed to sync from Supabase:', err);
+    }
+  }
+```
+
