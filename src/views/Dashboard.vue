@@ -701,81 +701,6 @@
               <div class="form-section">
                 <div class="section-title-bar">
                   <span class="section-badge">01</span>
-                  <h4 class="section-title">Search Engine Optimization (SEO)</h4>
-                </div>
-                
-                <div class="form-grid">
-                  <div class="form-group col-span-2">
-                    <label for="meta-title" class="form-label">Meta Title</label>
-                    <input type="text" id="meta-title" v-model="siteData.meta_title" class="form-input" required />
-                    <span class="hint-text">This title is displayed in browser tabs and search engine results.</span>
-                  </div>
-
-                  <div class="form-group col-span-2">
-                    <label for="meta-description" class="form-label">Meta Description</label>
-                    <textarea id="meta-description" v-model="siteData.meta_description" class="form-input text-area" rows="3" required></textarea>
-                    <span class="hint-text">A brief summary of your portfolio for search engines (recommended 150-160 characters).</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Section 02: Navbar Menu Titles & CTA -->
-              <div class="form-section">
-                <div class="section-title-bar">
-                  <span class="section-badge">02</span>
-                  <h4 class="section-title">Navbar Link Titles & CTA Button Settings</h4>
-                </div>
-                
-                <div class="form-grid">
-                  <div class="form-group col-span-2">
-                    <label for="navbar-logo" class="form-label">Navbar Logo Text</label>
-                    <input type="text" id="navbar-logo" v-model="siteData.navbar_logo" class="form-input" required />
-                  </div>
-
-                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                    <div class="row-cell">
-                      <label for="nav-home" class="form-label">{{ siteData.nav_home || 'Home' }} Link Title</label>
-                      <input type="text" id="nav-home" v-model="siteData.nav_home" class="form-input" required />
-                    </div>
-                    <div class="row-cell">
-                      <label for="nav-services" class="form-label">{{ siteData.nav_services || 'Services' }} Link Title</label>
-                      <input type="text" id="nav-services" v-model="siteData.nav_services" class="form-input" required />
-                    </div>
-                  </div>
-                  
-                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                    <div class="row-cell">
-                      <label for="nav-portfolio" class="form-label">{{ siteData.nav_portfolio || 'Portfolio' }} Link Title</label>
-                      <input type="text" id="nav-portfolio" v-model="siteData.nav_portfolio" class="form-input" required />
-                    </div>
-                    <div class="row-cell">
-                      <label for="nav-experience" class="form-label">{{ siteData.nav_experience || 'Experience' }} Link Title</label>
-                      <input type="text" id="nav-experience" v-model="siteData.nav_experience" class="form-input" required />
-                    </div>
-                  </div>
-
-                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                    <div class="row-cell">
-                      <label for="nav-about" class="form-label">{{ siteData.nav_about || 'About me' }} Link Title</label>
-                      <input type="text" id="nav-about" v-model="siteData.nav_about" class="form-input" required />
-                    </div>
-                    <div class="row-cell">
-                      <label for="nav-cta-text" class="form-label">CTA Button Label</label>
-                      <input type="text" id="nav-cta-text" v-model="siteData.nav_cta_text" class="form-input" required />
-                    </div>
-                  </div>
-
-                  <div class="form-group col-span-2">
-                    <label for="nav-cta-url" class="form-label">CTA Button Destination URL</label>
-                    <input type="text" id="nav-cta-url" v-model="siteData.nav_cta_url" class="form-input" required />
-                  </div>
-                </div>
-              </div>
-
-              <!-- Section 03: Theme Customization -->
-              <div class="form-section">
-                <div class="section-title-bar">
-                  <span class="section-badge">03</span>
                   <h4 class="section-title">Theme Customization</h4>
                 </div>
                 
@@ -847,6 +772,81 @@
 
                     </div>
                     <span class="hint-text">Click the square swatch to open SaaS Preset palette. Hex code updates instantly.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section 02: Navbar Menu Titles & CTA -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">02</span>
+                  <h4 class="section-title">Navbar Link Titles & CTA Button Settings</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="navbar-logo" class="form-label">Navbar Logo Text</label>
+                    <input type="text" id="navbar-logo" v-model="siteData.navbar_logo" class="form-input" required />
+                  </div>
+
+                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="row-cell">
+                      <label for="nav-home" class="form-label">{{ siteData.nav_home || 'Home' }} Link Title</label>
+                      <input type="text" id="nav-home" v-model="siteData.nav_home" class="form-input" required />
+                    </div>
+                    <div class="row-cell">
+                      <label for="nav-services" class="form-label">{{ siteData.nav_services || 'Services' }} Link Title</label>
+                      <input type="text" id="nav-services" v-model="siteData.nav_services" class="form-input" required />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="row-cell">
+                      <label for="nav-portfolio" class="form-label">{{ siteData.nav_portfolio || 'Portfolio' }} Link Title</label>
+                      <input type="text" id="nav-portfolio" v-model="siteData.nav_portfolio" class="form-input" required />
+                    </div>
+                    <div class="row-cell">
+                      <label for="nav-experience" class="form-label">{{ siteData.nav_experience || 'Experience' }} Link Title</label>
+                      <input type="text" id="nav-experience" v-model="siteData.nav_experience" class="form-input" required />
+                    </div>
+                  </div>
+
+                  <div class="form-group col-span-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="row-cell">
+                      <label for="nav-about" class="form-label">{{ siteData.nav_about || 'About me' }} Link Title</label>
+                      <input type="text" id="nav-about" v-model="siteData.nav_about" class="form-input" required />
+                    </div>
+                    <div class="row-cell">
+                      <label for="nav-cta-text" class="form-label">CTA Button Label</label>
+                      <input type="text" id="nav-cta-text" v-model="siteData.nav_cta_text" class="form-input" required />
+                    </div>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="nav-cta-url" class="form-label">CTA Button Destination URL</label>
+                    <input type="text" id="nav-cta-url" v-model="siteData.nav_cta_url" class="form-input" required />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section 03: Search Engine Optimization (SEO) -->
+              <div class="form-section">
+                <div class="section-title-bar">
+                  <span class="section-badge">03</span>
+                  <h4 class="section-title">Search Engine Optimization (SEO)</h4>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group col-span-2">
+                    <label for="meta-title" class="form-label">Meta Title</label>
+                    <input type="text" id="meta-title" v-model="siteData.meta_title" class="form-input" required />
+                    <span class="hint-text">This title is displayed in browser tabs and search engine results.</span>
+                  </div>
+
+                  <div class="form-group col-span-2">
+                    <label for="meta-description" class="form-label">Meta Description</label>
+                    <textarea id="meta-description" v-model="siteData.meta_description" class="form-input text-area" rows="3" required></textarea>
+                    <span class="hint-text">A brief summary of your portfolio for search engines (recommended 150-160 characters).</span>
                   </div>
                 </div>
               </div>
