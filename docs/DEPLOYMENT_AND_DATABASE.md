@@ -1,16 +1,41 @@
 # Deployment and Database Integration Guide
 
-This guide provides a comprehensive walkthrough for deploying your portfolio to **Vercel** and configuring **Supabase** as the database to store and sync your dynamic CMS configurations.
+This guide provides a comprehensive walkthrough for deploying your portfolio to **Vercel** and configuring **Supabase** as the database to store and sync your dynamic CMS configurations, matching our performance and security specifications.
 
 ---
 
-## 1. Deploying to Vercel
+## 1. Security First: Untracked `.env`
+For security reasons, your sensitive database credentials should **never** be committed to Git.
+- Ensure your `.env` is added to `.gitignore`.
+- Your local credentials remain safe in your local `.env`, but they will not be pushed to GitHub.
+- Consequently, you **must** configure your environment variables in the Vercel Dashboard so Vercel can connect to your Supabase database.
+
+---
+
+## 2. Serverless & Database Connection Optimization
+Vercel serverless instances connect and disconnect rapidly. To prevent database connection limits from being exhausted:
+- **Connection Pooler URL (`DATABASE_URL`)**: Point this to port `6543` using the transaction-mode pooler parameter `?pgbouncer=true`.
+- **Optimal Pool Parameters**: Limit each serverless instance to `connection_limit=3` and set `pool_timeout=30` to prevent database connection limits from being reached.
+- **Direct Connection URL (`DIRECT_URL`)**: Use port `5432` for direct database modifications or running migration scripts.
+
+---
+
+## 3. Function Region Optimization (Crucial for Speed)
+By default, Vercel creates serverless functions in the **Washington, D.C. (us-east-1)** datacenter. Because your Supabase database is in **Singapore (ap-southeast-1)**, every database query must travel cross-continent, resulting in ~200ms of extra latency per network round-trip.
+
+To eliminate this latency and make page loads fast:
+1. Log into your **[Vercel Dashboard](https://vercel.com)**.
+2. Select your project and navigate to the **Settings** tab.
+3. Click on **Functions** in the left sidebar.
+4. Scroll down to **Function Region** and change it from **Washington, D.C. (us-east-1)** to **Singapore (sin1)**.
+5. Click **Save**.
+6. *Note*: This change will apply to your next deployment.
+
+---
+
+## 4. Deploying to Vercel
 
 Vercel is the recommended hosting platform for Vite-based static and dynamic frontends.
-
-### Prerequisites
-- A **GitHub**, **GitLab**, or **Bitbucket** account with your portfolio repository pushed to it.
-- A free **Vercel** account.
 
 ### Step-by-Step Vercel Setup
 
@@ -19,34 +44,29 @@ Vercel is the recommended hosting platform for Vite-based static and dynamic fro
    - Click the **"Add New"** button in the dashboard, then select **"Project"**.
    - Under **"Import Git Repository"**, find your portfolio repository and click **"Import"**.
 3. **Configure Project Settings**:
-   - Vercel automatically detects **Vite** as the framework.
-   - **Build Command**: `npm run build` (or `vite build`).
-   - **Output Directory**: `dist`.
-   - **Install Command**: `npm install`.
+   - Vercel automatically detects your project configuration.
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
 4. **Configure Environment Variables**:
-   - If you have any environment variables (e.g. Supabase keys), expand the **"Environment Variables"** dropdown and enter them (see the Supabase section below).
-5. **Deploy**:
-   - Click **"Deploy"**. Vercel will build your static bundle and deploy it to a live production URL in under a minute.
+   Expand the **"Environment Variables"** dropdown and add the following keys:
+
+   | Key | Value Example | Description |
+   | :--- | :--- | :--- |
+   | **`DATABASE_URL`** | `postgresql://postgres.[ref]:[pass]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=3&pool_timeout=30` | Supabase **Transaction Pooler** URL (Port 6543) |
+   | **`DIRECT_URL`** | `postgresql://postgres.[ref]:[pass]@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres` | Supabase **Direct Connection** URL (Port 5432) |
+   | **`VITE_SUPABASE_URL`** | `https://[project-ref].supabase.co` | Supabase REST API URL |
+   | **`VITE_SUPABASE_ANON_KEY`** | `eyJhbGciOiJIUzI1...` | Supabase Anon Public Key |
+
+5. Click **Deploy**.
 
 ---
 
-## 2. Supabase Database Setup
+## 5. Supabase Database Schema Setup
 
-Supabase is an open-source Firebase alternative that provides a Postgres database with auto-generated REST APIs.
+If you need a table to store your portfolio settings, execute the following SQL in your Supabase dashboard:
 
-### Step 1: Create a Supabase Project
-1. Go to [supabase.com](https://supabase.com) and log in.
-2. Click **"New Project"**.
-3. Select your organization, enter a **Project Name** (e.g. `portfolio-cms`), set a secure **Database Password**, and choose a hosting region close to your target users.
-4. Click **"Create new project"** and wait for the database provisioning to complete (takes 1-2 minutes).
-
-### Step 2: Create the Database Schema
-To transition your local storage-based CMS into a Supabase database, you can store configurations in a single-row configuration table or a key-value schema. 
-
-For simplicity and flexibility, we recommend a single-row JSON configuration table:
-
-1. In your Supabase dashboard, click the **"SQL Editor"** icon in the sidebar.
-2. Click **"New Query"** and paste the following SQL script:
+1. Click the **"SQL Editor"** icon in the sidebar.
+2. Create a new query and execute this script to build the schema:
 
 ```sql
 -- Create the portfolio configuration table
@@ -95,38 +115,18 @@ values (
 )
 on conflict (id) do nothing;
 ```
-3. Click **"Run"** to execute the script. This creates your table, populates defaults, and secures it with Row Level Security (RLS).
+3. Click **"Run"** to execute.
 
 ---
 
-## 3. Connecting Supabase to your Vercel Project
+## 6. Accessing Supabase in Code
 
-Once the database is ready, you need to configure your frontend application to read and write from Supabase instead of local storage.
-
-### Step 1: Install Supabase Client
-In your local workspace terminal, install the Supabase JS client helper:
+Install the Supabase JS library locally:
 ```bash
 npm install @supabase/supabase-js
 ```
 
-### Step 2: Configure Environment Variables
-1. Go to your **Supabase Project Settings** > **API**.
-2. Copy the **Project API URL** and the **anon public key**.
-3. Create a local `.env` file or update your existing one:
-   ```env
-   VITE_SUPABASE_URL=https://your-project-id.supabase.co
-   VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-   ```
-
-### Step 3: Add Environment Variables in Vercel
-1. Go to your Vercel Dashboard, select your project, and navigate to **Settings** > **Environment Variables**.
-2. Add the two variables:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-3. Click **"Save"**. Vercel will automatically inject these variables into subsequent production builds.
-
-### Step 4: Update CMS Access Layer (Code Implementation)
-To integrate your project code with Supabase, you can modify `src/localCms.js` to perform CRUD queries on your `portfolio_config` table:
+Initialize the client to communicate with your database:
 
 ```javascript
 import { createClient } from '@supabase/supabase-js';
@@ -149,28 +149,4 @@ export async function fetchPortfolioFromDb() {
   }
   return data;
 }
-
-export async function savePortfolioToDb(siteData, socialLinks, clientLogos) {
-  const { data, error } = await supabase
-    .from('portfolio_config')
-    .update({
-      site_data: siteData,
-      social_links: socialLinks,
-      client_logos: clientLogos,
-      updated_at: new Date()
-    })
-    .eq('id', 1);
-
-  if (error) {
-    throw error;
-  }
-  return data;
-}
 ```
-
----
-
-## 4. Verification Check
-- Test your build locally using `npm run build && npm run preview` to ensure Vite resolves Supabase imports correctly.
-- Push your changes to Git. Vercel will auto-build the commit.
-- Open your live website, update text or the accent color in the Settings panel, save, and confirm that updates persist in the Supabase database.
