@@ -167,8 +167,8 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  border: 2px solid #bd3636;
-  filter: drop-shadow(0 0 3px rgba(189, 54, 54, 0.6));
+  border: 2px solid var(--accent);
+  filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.6));
   pointer-events: none;
 }
 

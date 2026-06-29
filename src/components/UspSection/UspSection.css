@@ -129,10 +129,10 @@
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--accent);
-  background-color: rgba(189, 54, 54, 0.1);
+  background-color: rgba(var(--accent-rgb), 0.1);
   padding: 4px 10px;
   border-radius: 6px;
-  border: 1px solid rgba(189, 54, 54, 0.2);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
