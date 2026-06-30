@@ -24,7 +24,7 @@
         <div class="bento-card card-management">
           <h3 class="card-title">Management Core</h3>
           <div class="skills-wrapper">
-            <span class="skill-tag tag-accent" v-for="skill in managementSkills" :key="skill">{{ skill }}</span>
+            <span class="skill-tag tag-accent" v-for="skill in (managementSkills || [])" :key="skill">{{ skill }}</span>
           </div>
         </div>
 

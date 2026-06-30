@@ -1,0 +1,23 @@
+# RAFIESTER - IT Project Manager & System Analyst
+
+## About
+Professional portfolio of Rafiester, an IT Project Manager and System Analyst specializing in bridging business requirements with clean, high-performance web applications using Vue.js, Nuxt.js, and modern tech stacks.
+
+## Core Expertise
+- IT Project Management & Agile/Scrum
+- System Analysis & Architecture Design
+- Frontend Engineering (Vue.js, Nuxt.js, CSS)
+- User Interface & User Experience (UI/UX) Design
+
+## Navigation & Sitemap
+- Home / Hero Section: `/`
+- Services & Capabilities: `/#services`
+- Case Studies / Portfolio: `/#portfolio`
+- Experience / Journey: `/#experience`
+- About Me / Skills: `/#about`
+- Contact / Call to Action: `https://wa.me/6281336191660`
+
+## Technical Stack
+- **Frameworks:** Vue.js 3, Vue Router, GSAP, OGL (WebGL)
+- **Database / CMS:** Supabase
+- **Hosting / Deployments:** Vercel

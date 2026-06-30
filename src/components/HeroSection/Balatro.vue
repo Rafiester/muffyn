@@ -165,6 +165,8 @@ const props = defineProps({
 const containerRef = ref(null);
 
 let cleanup = null;
+let program = null;
+
 const init = () => {
   if (!containerRef.value) return;
   const container = containerRef.value;
@@ -173,8 +175,6 @@ const init = () => {
   });
   const gl = renderer.gl;
   gl.clearColor(0, 0, 0, 1);
-
-  let program = null;
 
   function resize() {
     renderer.setSize(container.offsetWidth, container.offsetHeight);
@@ -235,13 +235,19 @@ const init = () => {
     cancelAnimationFrame(animationFrameId);
     window.removeEventListener('resize', resize);
     container.removeEventListener('mousemove', handleMouseMove);
-    container.removeChild(gl.canvas);
+    try {
+      container.removeChild(gl.canvas);
+    } catch (e) {}
     gl.getExtension('WEBGL_lose_context')?.loseContext();
+    program = null;
   };
 };
 
 onMounted(() => {
-  init();
+  // Defer initialization to avoid blocking initial paint and main thread
+  setTimeout(() => {
+    init();
+  }, 100);
 });
 
 onUnmounted(() => {
@@ -261,12 +267,24 @@ watch(
     props.spinAmount,
     props.pixelFilter,
     props.spinEase,
-    props.isRotate,
-    props.mouseInteraction
+    props.isRotate
   ],
   () => {
-    cleanup?.();
-    init();
-  }
+    if (program) {
+      program.uniforms.uSpinRotation.value = props.spinRotation;
+      program.uniforms.uSpinSpeed.value = props.spinSpeed;
+      program.uniforms.uOffset.value = props.offset;
+      program.uniforms.uColor1.value = hexToVec4(props.color1);
+      program.uniforms.uColor2.value = hexToVec4(props.color2);
+      program.uniforms.uColor3.value = hexToVec4(props.color3);
+      program.uniforms.uContrast.value = props.contrast;
+      program.uniforms.uLighting.value = props.lighting;
+      program.uniforms.uSpinAmount.value = props.spinAmount;
+      program.uniforms.uPixelFilter.value = props.pixelFilter;
+      program.uniforms.uSpinEase.value = props.spinEase;
+      program.uniforms.uIsRotate.value = props.isRotate;
+    }
+  },
+  { deep: true }
 );
 </script>

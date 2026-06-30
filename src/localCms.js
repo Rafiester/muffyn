@@ -358,9 +358,9 @@ export const localCms = {
 
         if (callback) {
           callback({
-            siteData: data.site_data,
-            socialLinks: data.social_links,
-            clientLogos: data.client_logos
+            siteData: data.site_data || {},
+            socialLinks: data.social_links || [],
+            clientLogos: data.client_logos || []
           });
         }
       }

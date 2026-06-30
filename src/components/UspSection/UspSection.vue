@@ -19,7 +19,7 @@
       <div class="usp-right">
         
         <!-- Services Loop -->
-        <div v-for="(service, index) in services" :key="index" class="service-row">
+        <div v-for="(service, index) in (services || [])" :key="index" class="service-row">
           <div class="service-thumbnail">
             <!-- Render Laptop SVG Visual Mockup for first item -->
             <svg v-if="index === 0" viewBox="0 0 100 70" class="thumbnail-svg">
@@ -61,7 +61,7 @@
           <div class="service-meta">
             <h3 class="service-title">{{ service.title }}</h3>
             <p v-if="service.description" class="service-desc">{{ service.description }}</p>
-            <div v-if="service.tags && service.tags.trim()" class="service-tags">
+            <div v-if="service.tags && typeof service.tags === 'string' && service.tags.trim()" class="service-tags">
               <span 
                 v-for="(tag, tagIdx) in service.tags.split(',').map(t => t.trim()).filter(Boolean)" 
                 :key="tagIdx" 

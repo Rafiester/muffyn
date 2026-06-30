@@ -71,6 +71,7 @@
   text-transform: uppercase;
   max-width: none;
   width: 100%;
+  min-height: 309px; /* Reserve height for 3 lines to prevent CLS */
 }
 
 .title-line-wrap {
@@ -268,6 +269,8 @@
 @media (max-width: 1024px) {
   .hero-title {
     font-size: 72px;
+    line-height: 76px;
+    min-height: 228px;
   }
   .hero-description {
     font-size: 18px;
@@ -282,6 +285,8 @@
 
   .hero-title {
     font-size: 44px;
+    line-height: 48px;
+    min-height: 144px;
   }
 
   .hero-description {

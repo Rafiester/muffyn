@@ -1,12 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineAsyncComponent } from 'vue';
 import { localCms } from '../localCms';
 import Navbar from '../components/Navbar/Navbar.vue';
 import HeroSection from '../components/HeroSection/HeroSection.vue';
-import UspSection from '../components/UspSection/UspSection.vue';
-import CaseStudySection from '../components/CaseStudySection/CaseStudySection.vue';
-import CareerSection from '../components/CareerSection/CareerSection.vue';
-import AboutSection from '../components/AboutSection/AboutSection.vue';
+
+const UspSection = defineAsyncComponent(() => import('../components/UspSection/UspSection.vue'));
+const CaseStudySection = defineAsyncComponent(() => import('../components/CaseStudySection/CaseStudySection.vue'));
+const CareerSection = defineAsyncComponent(() => import('../components/CareerSection/CareerSection.vue'));
+const AboutSection = defineAsyncComponent(() => import('../components/AboutSection/AboutSection.vue'));
 
 // Site configuration state with static fallbacks
 const siteData = ref({
@@ -45,13 +46,14 @@ onMounted(() => {
 
     // Sync from Supabase database in the background
     localCms.syncFromSupabase((synced) => {
-      siteData.value = synced.siteData;
-      socialLinks.value = synced.socialLinks;
-      clientLogos.value = synced.clientLogos;
-      if (synced.siteData.meta_title) {
+      if (!synced) return;
+      siteData.value = { ...siteData.value, ...(synced.siteData || {}) };
+      socialLinks.value = synced.socialLinks || socialLinks.value || [];
+      clientLogos.value = synced.clientLogos || clientLogos.value || [];
+      if (synced.siteData && synced.siteData.meta_title) {
         document.title = synced.siteData.meta_title;
       }
-      if (synced.siteData.meta_description) {
+      if (synced.siteData && synced.siteData.meta_description) {
         let metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc) {
           metaDesc.setAttribute('content', synced.siteData.meta_description);
