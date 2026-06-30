@@ -128,7 +128,7 @@
 .service-tag {
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--accent);
+  color: #ff8a80;
   background-color: rgba(var(--accent-rgb), 0.1);
   padding: 4px 10px;
   border-radius: 6px;

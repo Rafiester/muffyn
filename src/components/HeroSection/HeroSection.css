@@ -63,6 +63,7 @@
 }
 
 .hero-title {
+  display: block !important;
   font-family: 'Geologica', sans-serif;
   font-size: 112px;
   font-weight: 600;
@@ -216,8 +217,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #90a4ae;
-  opacity: 0.6;
+  color: #cfd8dc;
+  opacity: 0.95;
   transition: var(--transition-smooth);
   background-color: #1a1b21;
   border-radius: 5px;

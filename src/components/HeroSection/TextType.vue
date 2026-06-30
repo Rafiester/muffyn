@@ -205,7 +205,7 @@ onBeforeUnmount(() => {
     <span
       v-if="showCursor"
       ref="cursorRef"
-      :class="`ml-1 inline-block opacity-100 ${
+      :class="`ml-1 inline opacity-100 ${
         hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting) ? 'hidden' : ''
       } ${cursorClassName}`"
     >
